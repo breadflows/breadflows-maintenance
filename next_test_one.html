@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BreadFlows Studios | AI Film & Music Production</title>
+    <meta name="description" content="BreadFlows Studios: Synthetic Cinema & Sonic Landscapes.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;500;800&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- 1. THE PALETTE (Derived from your Image) --- */
+        :root {
+            --bg-deep: #020610;       /* The dark void */
+            --ribbon-dark: #0a1f3d;   /* The navy ribbon */
+            --ribbon-light: #2c5a9c;  /* The lighter blue accents */
+            --accent-glow: #4ca1af;   /* The cyan edge glow */
+            --text-silver: #e0e6ed;   /* Metallic text */
+            --glass-surface: rgba(10, 31, 61, 0.4); /* See-through cards */
+            --border-light: rgba(255, 255, 255, 0.1);
+            
+            --font-main: 'Montserrat', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-silver);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            font-weight: 300;
+        }
+
+        /* --- 2. THE ABSTRACTION (Background Flow) --- */
+        /* This creates the "Fluid Ribbon" effect using CSS gradients */
+        .background-flow {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, var(--ribbon-dark), transparent 50%),
+                        radial-gradient(circle at 85% 30%, var(--ribbon-light), transparent 50%);
+            filter: blur(80px); /* This blends the colors into a "flow" */
+            opacity: 0.6;
+            animation: pulse-flow 15s infinite alternate;
+        }
+
+        @keyframes pulse-flow {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.2); }
+        }
+
+        /* The "Grid/Glitch" Overlay - subtle vertical lines */
+        .grid-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            background-image: linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 200px 100%; /* Vertical slices like your image */
+        }
+
+        /* --- UTILITIES --- */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        a { text-decoration: none; color: inherit; transition: 0.4s ease; }
+        ul { list-style: none; }
+
+        /* --- 3. NAVIGATION (Clean & Corporate) --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 3rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(2, 6, 16, 0.8); /* Dark Glass */
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-transform: uppercase;
+            /* Gradient Text like the silver in image */
+            background: linear-gradient(to right, #fff, #a0a0a0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links { display: flex; gap: 3rem; }
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+        .nav-links a:hover { opacity: 1; color: var(--accent-glow); }
+
+        /* --- 4. HERO SECTION (The Logo Come to Life) --- */
+        header {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 5px; /* Matches your image typography */
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            /* Metallic Gradient */
+            background: linear-gradient(135deg, #ffffff 0%, #cfcfcf 50%, #7d8fa3 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .subhead {
+            font-size: 1.1rem;
+            font-weight: 300;
+            max-width: 600px;
+            margin-bottom: 3rem;
+            color: #aebbc9;
+            letter-spacing: 2px;
+        }
+
+        /* The "Layered" Button */
+        .cta-btn {
+            padding: 1rem 3rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: 0.4s;
+        }
+
+        .cta-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 0%; height: 100%;
+            background: var(--ribbon-light);
+            z-index: -1;
+            transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        .cta-btn:hover::before { width: 100%; }
+        .cta-btn:hover { border-color: var(--ribbon-light); box-shadow: 0 0 30px rgba(44, 90, 156, 0.4); }
+
+        /* --- 5. GLASS CARDS (The "Cut" Effect) --- */
+        section { padding: 8rem 0; }
+        .section-title {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 4rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            border-left: 4px solid var(--accent-glow);
+            padding-left: 1.5rem;
+            background: linear-gradient(90deg, rgba(76, 161, 175, 0.1), transparent);
+        }
+
+        .manifesto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; }
+        .manifesto-text p { margin-bottom: 1.5rem; font-size: 1.1rem; color: #b0c4de; }
+        .highlight { color: #fff; font-weight: 600; border-bottom: 1px solid var(--accent-glow); }
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        /* The Glassmorphism Card Style */
+        .card {
+            background: var(--glass-surface);
+            backdrop-filter: blur(12px); /* The "Frosted Glass" look */
+            border: 1px solid var(--border-light);
+            padding: 1.5rem;
+            transition: transform 0.4s, border-color 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Abstract "Glitch" Decor on Card Hover */
+        .card::after {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: skewX(-25deg);
+            transition: 0.5s;
+        }
+
+        .card:hover::after { left: 200%; }
+        .card:hover { transform: translateY(-10px); border-color: var(--accent-glow); }
+
+        .media-container {
+            width: 100%;
+            position: relative;
+            padding-bottom: 56.25%; 
+            background: #000;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-light);
+        }
+        .media-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .card h3 { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.5rem; color: #fff; letter-spacing: 1px; }
+        .card p { font-size: 0.9rem; color: #8fa3b8; }
+
+        /* --- 6. CONTACT (Data Link) --- */
+        .contact-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+            border: 1px solid var(--border-light);
+            padding: 4rem;
+            text-align: center;
+            max-width: 700px;
+            margin: 0 auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .email-display {
+            font-size: 2rem;
+            font-weight: 800;
+            margin: 2rem 0;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .email-display:hover { color: var(--accent-glow); text-shadow: 0 0 20px var(--accent-glow); }
+
+        .copy-btn {
+            background: var(--ribbon-light);
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            font-family: var(--font-main);
+            font-weight: 600;
+            cursor: pointer;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .copy-feedback {
+            margin-top: 1rem;
+            color: var(--accent-glow);
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        footer {
+            padding: 3rem;
+            text-align: center;
+            font-size: 0.8rem;
+            color: #5d6d7e;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .manifesto-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="background-flow"></div>
+    <div class="grid-overlay"></div>
+
+    <nav>
+        <div class="logo">BREADFLOWS</div>
+        <ul class="nav-links">
+            <li><a href="#manifesto">DOCTRINE</a></li>
+            <li><a href="#portfolio">ARCHIVE</a></li>
+            <li><a href="#contact">TRANSMIT</a></li>
+        </ul>
+    </nav>
+
+    <header>
+        <h1>BREADFLOWS<br><span style="font-weight: 300; font-size: 0.5em; opacity: 0.8;">STUDIOS</span></h1>
+        <p class="subhead">
+            SYNTHETIC CINEMA. SONIC LANDSCAPES.<br>
+            WHERE HUMAN INTENT MEETS GENERATIVE POWER.
+        </p>
+        <a href="#portfolio" class="cta-btn">Enter The Archive</a>
+    </header>
+
+    <section id="manifesto">
+        <div class="container">
+            <h2 class="section-title">The Doctrine</h2>
+            <div class="manifesto-grid">
+                <div class="manifesto-text">
+                    <p>In an era of automated noise, <span class="highlight">intent is the only currency.</span></p>
+                    <p>BreadFlows Studios operates on a strict "Human-in-the-Loop" philosophy. Generative AI is capable of infinite output, but it lacks perspective. That is where we intervene.</p>
+                </div>
+                <div class="manifesto-text">
+                    <p>We view these tools as the "Synthesizer of the 21st Century." Just as the synth did not kill the orchestra, AI does not kill the artist—it expands the canvas.</p>
+                    <p>Every frame, every beat, and every lyric produced by this studio is rigorously directed, edited, and finalized by human decision-making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="portfolio">
+        <div class="container">
+            <h2 class="section-title">Selected Works</h2>
+            
+            <div class="portfolio-grid">
+                <div class="card">
+                    <div class="media-container">
+                        <iframe src="https://www.youtube.com/embed/CtPA2t7vZDo" title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                    <h3>PROJECT THE RIFT</h3>
+                    <p>Cinematic Narrative. Broadcasts from fractured dimensions.</p>
+                </div>
+
+                <div class="card">
+                    <div class="media-container">
+                        <iframe src="https://www.youtube.com/embed/DGlXjTk3IXI" title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                    <h3>INK BETWEEN WORLDS</h3>
+                    <p>Audio-Reactive Visualizer. Soundtrack from The Rift.</p>
+                </div>
+
+                <div class="card">
+                    <div class="media-container">
+                        <iframe src="https://www.youtube.com/embed/6D8QlYZziQU" title="YouTube video player" allowfullscreen></iframe>
+                    </div>
+                    <h3>ALWAYS A BIGGER FISH</h3>
+                    <p>Original Composition. Lyrics by Roy Thigpen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Initiate Contact</h2>
+            <div class="contact-box">
+                <p style="text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem;">Press & Licensing Inquiries</p>
+                <div class="email-display" onclick="copyEmail()">contact@breadflows.com</div>
+                <button class="copy-btn" onclick="copyEmail()">Copy Address</button>
+                <div id="copy-msg" class="copy-feedback">ADDRESS COPIED TO CLIPBOARD</div>
+                
+                <p style="margin-top: 2rem; font-size: 0.8rem; color: #8fa3b8;">
+                    BreadFlows Studios does not monitor social media DMs for business.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 BREADFLOWS STUDIOS. ALL RIGHTS RESERVED.</p>
+        <p style="opacity: 0.5; margin-top: 0.5rem;">DIRECTED BY ROY THIGPEN</p>
+    </footer>
+
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Copy Email Logic
+        function copyEmail() {
+            const email = "contact@breadflows.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const feedback = document.getElementById("copy-msg");
+                feedback.style.opacity = "1";
+                setTimeout(() => { feedback.style.opacity = "0"; }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
