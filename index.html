@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>BreadFlows</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="BreadFlows. Filmmaker, music producer, world-builder.">
+<meta property="og:title" content="BreadFlows">
+<meta property="og:description" content="Filmmaker, music producer, world-builder.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@300;400;500;600;700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0a;--bg-raised:#111;--bg-card:#161616;
+  --border:#1e1e1e;--border-bright:#2a2a2a;
+  --text:#e8e8e8;--text-2:#777;--text-3:#444;
+  --accent:#c8ff00;--accent-dim:#4a5e00;
+  --mono:'Azeret Mono','DM Mono',monospace;
+  --grid:rgba(255,255,255,0.03);
+}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--border-bright) var(--bg)}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--accent);color:var(--bg)}
+img{display:block}
+
+/* FRAME */
+.frame{position:fixed;inset:0;pointer-events:none;z-index:1000}
+.fl{position:absolute;background:var(--border)}
+.fl.t{top:0;left:0;right:0;height:1px}.fl.b{bottom:0;left:0;right:0;height:1px}
+.fl.l{top:0;bottom:0;left:0;width:1px}.fl.r{top:0;bottom:0;right:0;width:1px}
+.fc{position:absolute;width:12px;height:12px;border-color:var(--border-bright);border-style:solid}
+.fc.tl{top:8px;left:8px;border-width:1px 0 0 1px}
+.fc.tr{top:8px;right:8px;border-width:1px 1px 0 0}
+.fc.bl{bottom:8px;left:8px;border-width:0 0 1px 1px}
+.fc.br{bottom:8px;right:8px;border-width:0 1px 1px 0}
+
+/* PRELOADER */
+.preloader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:24px}
+.pl-text{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-3)}
+.pl-bar{width:120px;height:1px;background:var(--border);position:relative;overflow:hidden}
+.pl-fill{position:absolute;top:0;left:0;height:100%;width:0%;background:var(--text)}
+.pl-count{font-size:11px;letter-spacing:.2em;color:var(--text-3);font-variant-numeric:tabular-nums}
+
+/* LAYOUT */
+.ctn{max-width:1100px;margin:0 auto;padding:0 40px}
+@media(max-width:768px){.ctn{padding:0 20px}}
+section{position:relative}
+
+/* GRID BG */
+.gbg{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.gbg::before{content:'';position:absolute;inset:0;background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:80px 80px}
+
+/* SECTION LABEL */
+.slbl{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--text-3);margin-bottom:48px;display:flex;align-items:center;gap:16px}
+.slbl::before{content:'';width:8px;height:8px;border:1px solid var(--accent-dim);display:inline-block}
+
+/* ---- HERO ---- */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:80px;position:relative}
+.hero-name{font-size:clamp(48px,10vw,120px);font-weight:700;letter-spacing:-.02em;line-height:.9}
+.hero-name .ch{display:inline-block;opacity:0;transform:translateY(40px)}
+.hero-sub{margin-top:32px;display:flex;align-items:center;gap:20px}
+.hero-sub-line{width:40px;height:1px;background:var(--text-3)}
+.hero-sub-text{font-size:11px;letter-spacing:.25em;text-transform:uppercase;color:var(--text-2)}
+.hero-scroll{position:absolute;bottom:30px;right:40px;writing-mode:vertical-rl;font-size:10px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-3);display:flex;align-items:center;gap:12px}
+.hero-scroll::after{content:'';width:1px;height:40px;background:var(--text-3);animation:sp 2s ease-in-out infinite}
+@keyframes sp{0%,100%{opacity:.3;transform:scaleY(.5);transform-origin:top}50%{opacity:1;transform:scaleY(1);transform-origin:top}}
+
+/* ---- NOW / AXIOMORT ---- */
+.now{padding:120px 0;border-top:1px solid var(--border)}
+.now-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px}
+.now-title{font-size:28px;font-weight:600;line-height:1.3;letter-spacing:-.01em}
+.now-title .hl{color:var(--accent)}
+.now-desc{color:var(--text-2);font-size:13px;line-height:1.8}
+.now-status{margin-top:32px;display:flex;gap:32px;flex-wrap:wrap}
+.st-item{display:flex;flex-direction:column;gap:6px}
+.st-lbl{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-3)}
+.st-val{font-size:13px;color:var(--text-2)}
+.st-val.on{color:var(--accent)}
+.now-links{margin-top:32px;display:flex;gap:16px;flex-wrap:wrap}
+.now-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--border);color:var(--text-2);transition:all .3s;cursor:pointer;background:none}
+.now-btn:hover{border-color:var(--accent-dim);color:var(--accent)}
+.now-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
+.now-btn.primary:hover{background:#b0e000}
+@media(max-width:768px){.now-grid{grid-template-columns:1fr;gap:32px}}
+
+/* ---- TIMELINE ---- */
+.tl-section{padding:120px 0;border-top:1px solid var(--border)}
+.tl{position:relative;margin-top:20px}
+.tl-line{position:absolute;left:0;top:0;bottom:0;width:1px;background:var(--border)}
+.tl-fill{position:absolute;left:0;top:0;width:1px;height:0;background:var(--accent-dim)}
+.era{position:relative;padding-left:48px;padding-bottom:64px;opacity:0;transform:translateY(20px)}
+.era:last-child{padding-bottom:0}
+.era-dot{position:absolute;left:-4px;top:6px;width:9px;height:9px;border:1px solid var(--border-bright);background:var(--bg);transition:border-color .4s,background .4s}
+.era.active .era-dot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 12px rgba(200,255,0,.2)}
+.era-year{font-size:10px;letter-spacing:.3em;color:var(--text-3);margin-bottom:8px}
+.era-name{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;transition:color .3s}
+.era:hover .era-name{color:var(--accent)}
+.era-desc{font-size:12px;color:var(--text-2);line-height:1.7;max-width:500px}
+.era-card{margin-top:16px;display:flex;align-items:stretch;gap:0;border:1px solid var(--border);overflow:hidden;max-width:420px;transition:border-color .3s;cursor:pointer;text-decoration:none}
+.era-card:hover{border-color:var(--accent-dim)}
+.era-thumb{width:120px;min-height:68px;background:var(--bg-card);background-size:cover;background-position:center;flex-shrink:0;position:relative}
+.era-thumb::after{content:'';position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:20px;color:rgba(255,255,255,.8);background:rgba(0,0,0,.3);opacity:0;transition:opacity .3s}
+.era-card:hover .era-thumb::after{opacity:1;content:'\\25B6'}
+.era-card-info{padding:12px 16px;display:flex;flex-direction:column;justify-content:center;min-width:0}
+.era-card-label{font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-3)}
+.era-card-name{font-size:11px;color:var(--text-2);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* ---- GALLERY ---- */
+.gal-section{padding:120px 0;border-top:1px solid var(--border)}
+.gal-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:20px}
+.gal-cell{aspect-ratio:1;overflow:hidden;position:relative;background:var(--bg-card)}
+.gal-cell img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1),filter .4s;filter:grayscale(.3) brightness(.85)}
+.gal-cell:hover img{transform:scale(1.08);filter:grayscale(0) brightness(1)}
+@media(max-width:768px){.gal-grid{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:769px) and (max-width:1024px){.gal-grid{grid-template-columns:repeat(3,1fr)}}
+
+/* ---- TOOLS (AI Platforms) ---- */
+.tools-section{padding:120px 0;border-top:1px solid var(--border)}
+.tools-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:4px;margin-top:20px}
+.tool-link{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--bg-raised);border:1px solid var(--border);transition:all .3s;font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+.tool-link:hover{border-color:var(--accent-dim);background:var(--bg-card)}
+.tool-link:hover .tl-name{color:var(--accent)}
+.tl-name{color:var(--text-2);transition:color .3s}
+.tl-arrow{color:var(--text-3);transition:color .3s,transform .3s;font-size:13px}
+.tool-link:hover .tl-arrow{color:var(--accent);transform:translateX(3px)}
+.tool-cat{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:var(--text-3);margin-top:40px;margin-bottom:16px}
+.tool-cat:first-child{margin-top:20px}
+
+/* ---- CONNECT ---- */
+.conn-section{padding:120px 0;border-top:1px solid var(--border)}
+.conn-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:20px}
+.dc-card{border:1px solid var(--border);padding:32px;background:var(--bg-raised);position:relative;overflow:hidden}
+.dc-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:#5865F2}
+.dc-lbl{font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#5865F2;margin-bottom:16px}
+.dc-title{font-size:18px;font-weight:600;margin-bottom:12px}
+.dc-desc{font-size:12px;color:var(--text-2);line-height:1.7;margin-bottom:24px}
+.dc-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:#5865F2;color:#fff;font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;border:none;cursor:pointer;transition:background .3s}
+.dc-btn:hover{background:#4752C4}
+.soc-links{display:flex;flex-direction:column}
+.soc-link{display:flex;align-items:center;justify-content:space-between;padding:20px 0;border-bottom:1px solid var(--border);transition:all .3s}
+.soc-link:first-child{border-top:1px solid var(--border)}
+.soc-link:hover{padding-left:12px}
+.soc-name{font-size:13px;letter-spacing:.1em;text-transform:uppercase;transition:color .3s}
+.soc-link:hover .soc-name{color:var(--accent)}
+.soc-arr{font-size:14px;color:var(--text-3);transition:color .3s,transform .3s}
+.soc-link:hover .soc-arr{color:var(--accent);transform:translateX(4px)}
+@media(max-width:768px){.conn-grid{grid-template-columns:1fr}}
+
+/* ---- FOOTER ---- */
+.footer{padding:60px 0;border-top:1px solid var(--border)}
+.footer-in{display:flex;justify-content:space-between;align-items:center}
+.footer-t{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-3)}
+.footer-bk{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-3);transition:color .3s}
+.footer-bk:hover{color:var(--accent)}
+
+/* REVEALS */
+.rv{opacity:0;transform:translateY(24px)}
+.rv.vis{opacity:1;transform:translateY(0);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
+.rvs>*{opacity:0;transform:translateY(16px)}
+.rvs.vis>*{opacity:1;transform:translateY(0);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+</style>
+</head>
+<body>
+
+<div class="frame">
+  <div class="fl t"></div><div class="fl b"></div><div class="fl l"></div><div class="fl r"></div>
+  <div class="fc tl"></div><div class="fc tr"></div><div class="fc bl"></div><div class="fc br"></div>
+</div>
+
+<div class="preloader" id="pre">
+  <div class="pl-text">BREADFLOWS</div>
+  <div class="pl-bar"><div class="pl-fill" id="pf"></div></div>
+  <div class="pl-count" id="pc">000</div>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="gbg"></div>
+  <div class="ctn">
+    <div class="hero-name" id="hn">BREAD<br>FLOWS</div>
+    <div class="hero-sub">
+      <div class="hero-sub-line"></div>
+      <div class="hero-sub-text">Filmmaker / Music Producer / World-Builder</div>
+    </div>
+  </div>
+  <div class="hero-scroll">scroll</div>
+</section>
+
+<!-- NOW / AXIOMORT -->
+<section class="now" id="now">
+  <div class="ctn">
+    <div class="slbl rv">Currently</div>
+    <div class="now-grid">
+      <div>
+        <div class="now-title rv">Building <span class="hl">AXIOMORT</span>.<br>A feature-length film.</div>
+      </div>
+      <div>
+        <div class="now-desc rv">A cosmic lion infected by a black ink parasite. Civilizations trapped inside a living universe. A pilgrimage toward a mountain to retrieve something that was stolen. The whole thing is a cinematic musical where the lyrics carry the narrative.</div>
+        <div class="now-status rv">
+          <div class="st-item"><span class="st-lbl">Status</span><span class="st-val on">In Production</span></div>
+          <div class="st-item"><span class="st-lbl">Stage</span><span class="st-val">Animatic / Storyboard</span></div>
+          <div class="st-item"><span class="st-lbl">Format</span><span class="st-val">57 min</span></div>
+        </div>
+        <div class="now-links rv">
+          <a href="https://axiomort.com" target="_blank" rel="noopener" class="now-btn primary">AXIOMORT.COM &nearr;</a>
+          <a href="https://www.youtube.com/playlist?list=OLAK5uy_kiKDg22GWozeichkwirezck_z8oc3fiq8" target="_blank" rel="noopener" class="now-btn">Album &nearr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section class="tl-section" id="timeline">
+  <div class="ctn">
+    <div class="slbl rv">The Timeline</div>
+    <div class="tl">
+      <div class="tl-line"><div class="tl-fill" id="tlf"></div></div>
+
+      <div class="era" data-playlist="PLln60eLGTlYE-io6rmclBPYi3FyawC43G">
+        <div class="era-dot"></div>
+        <div class="era-year">2016</div>
+        <div class="era-name">Gaming Era</div>
+        <div class="era-desc">The origin. Bad mic quality, zero viewers, learning to edit by doing it wrong a hundred times. The channel that started everything even though nothing about it was good.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYE-io6rmclBPYi3FyawC43G" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYE-io6rmclBPYi3FyawC43G"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">Gaming Era</div></div>
+        </a>
+      </div>
+
+      <div class="era" data-playlist="PLln60eLGTlYENFAnQnpR1bWiGfbMMjfZW">
+        <div class="era-dot"></div>
+        <div class="era-year">2017 - 2019</div>
+        <div class="era-name">Sh*tpost Era</div>
+        <div class="era-desc">The chaotic middle ground. Memes, random edits, whatever felt funny at 2am. No direction, pure expression, accidentally learning what timing and comedy feel like in edit form.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYENFAnQnpR1bWiGfbMMjfZW" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYENFAnQnpR1bWiGfbMMjfZW"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">Sh*tpost Era</div></div>
+        </a>
+      </div>
+
+      <div class="era" data-playlist="PLln60eLGTlYF7bQHJsRDAWdcBz-HocUBl">
+        <div class="era-dot"></div>
+        <div class="era-year">2020+</div>
+        <div class="era-name">Idk Man</div>
+        <div class="era-desc">The uncategorisable stuff. Everything that didn't fit anywhere else. Experiments, one-offs, things that made sense at the time.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYF7bQHJsRDAWdcBz-HocUBl" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYF7bQHJsRDAWdcBz-HocUBl"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">Idk Man</div></div>
+        </a>
+      </div>
+
+      <div class="era" data-playlist="PLln60eLGTlYEkaxaCFwSL_vuk-GOmaFD4">
+        <div class="era-dot"></div>
+        <div class="era-year">2021</div>
+        <div class="era-name">Wannabe Gaming Tuber</div>
+        <div class="era-desc">The return to gaming content but with slightly better editing. Still figuring it out. The ambition was there, the audience wasn't.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYEkaxaCFwSL_vuk-GOmaFD4" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYEkaxaCFwSL_vuk-GOmaFD4"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">Wannabe Gaming Tuber</div></div>
+        </a>
+      </div>
+
+      <div class="era" data-playlist="PLln60eLGTlYHNsw5etNBUcG8CS4HOO16R">
+        <div class="era-dot"></div>
+        <div class="era-year">2022</div>
+        <div class="era-name">Psychonaut Era</div>
+        <div class="era-desc">The expansion. Exploring consciousness, altered states, and translating inner experience into visual language. The work got weirder and more honest at the same time.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYHNsw5etNBUcG8CS4HOO16R" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYHNsw5etNBUcG8CS4HOO16R"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">Psychonaut Era</div></div>
+        </a>
+      </div>
+
+      <div class="era" data-playlist="PLln60eLGTlYESdY2URWQztq2B3gVQDDHT">
+        <div class="era-dot"></div>
+        <div class="era-year">2022 - 2024</div>
+        <div class="era-name">AMVs &amp; Edits</div>
+        <div class="era-desc">Found the tools that matched the vision. Cinematic music videos, character-driven worlds, the beginning of a connected universe. Spectrum Motions. Vyinkar Portal Synod. Fractal Ascendancy. The Nexus Veil. Hollow Choir. Rose Petals Resistance. The Rift.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYESdY2URWQztq2B3gVQDDHT" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYESdY2URWQztq2B3gVQDDHT"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">AMVs &amp; Edits</div></div>
+        </a>
+      </div>
+
+      <div class="era active" data-playlist="PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1">
+        <div class="era-dot"></div>
+        <div class="era-year">2025 - Present</div>
+        <div class="era-name">SIGNAL_404 // DIMENSIONAL EXTRACTS</div>
+        <div class="era-desc">Archived transmissions from a previous universe cycle. The old music videos recontextualized as lore. Everything before AXIOMORT now lives here.</div>
+        <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1" target="_blank" rel="noopener">
+          <div class="era-thumb" data-pl="PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1"></div>
+          <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">signal_404</div></div>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section class="gal-section" id="gallery">
+  <div class="ctn">
+    <div class="slbl rv">Gallery</div>
+    <div class="gal-grid" id="gal"></div>
+  </div>
+</section>
+
+<!-- PROFILES (platforms with a @breadflows) -->
+<section class="tools-section" id="profiles">
+  <div class="ctn">
+    <div class="slbl rv">Find Me On</div>
+    <div class="tools-grid rv">
+      <a href="https://www.midjourney.com/@breadflows" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Midjourney</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://app.leonardo.ai/profile/breadflowz" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Leonardo AI</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://suno.com/@breadflows" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Suno</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://kling.ai/app/user-home/20317929/all" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Kling AI</span><span class="tl-arrow">&nearr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTION STACK -->
+<section class="tools-section" id="stack">
+  <div class="ctn">
+    <div class="slbl rv">The Production Stack</div>
+
+    <div class="tool-cat">Image</div>
+    <div class="tools-grid rv">
+      <a href="https://playground.bfl.ai/image/generate" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Flux / Playground</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://aistudio.google.com" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Google AI Studio</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://ideogram.ai/t/explore" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Ideogram</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://www.freepik.com/" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Freepik Mystic</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://stability.ai/" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Stability AI</span><span class="tl-arrow">&nearr;</span></a>
+    </div>
+
+    <div class="tool-cat">Video</div>
+    <div class="tools-grid rv">
+      <a href="https://kling.ai/app/user-home/20317929/all" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Kling AI</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://runwayml.com" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Runway</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://pika.art/login" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Pika</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://lumalabs.ai/" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Luma Dream Machine</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://haiper.ai/" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Haiper</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://www.minimax.io/" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">MiniMax / Hailuo</span><span class="tl-arrow">&nearr;</span></a>
+    </div>
+
+    <div class="tool-cat">Audio</div>
+    <div class="tools-grid rv">
+      <a href="https://elevenlabs.io" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">ElevenLabs</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://udio.com" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Udio</span><span class="tl-arrow">&nearr;</span></a>
+    </div>
+
+    <div class="tool-cat">Post-Production</div>
+    <div class="tools-grid rv">
+      <a href="https://topazlabs.com" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">Topaz Video AI</span><span class="tl-arrow">&nearr;</span></a>
+      <a href="https://www.blackmagicdesign.com/products/davinciresolve" target="_blank" rel="noopener" class="tool-link"><span class="tl-name">DaVinci Resolve</span><span class="tl-arrow">&nearr;</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- CONNECT -->
+<section class="conn-section" id="connect">
+  <div class="ctn">
+    <div class="slbl rv">Connect</div>
+    <div class="conn-grid">
+      <div class="dc-card rv">
+        <div class="dc-lbl">Discord Community</div>
+        <div class="dc-title">Join the Server</div>
+        <div class="dc-desc">Where the work gets discussed before it goes public. Production updates, early cuts, and the occasional unhinged conversation.</div>
+        <a href="#" class="dc-btn">Join Discord</a>
+      </div>
+      <div class="soc-links rvs">
+        <a href="https://youtube.com/@breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">YouTube</span><span class="soc-arr">&nearr;</span></a>
+        <a href="https://instagram.com/breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">Instagram</span><span class="soc-arr">&nearr;</span></a>
+        <a href="https://tiktok.com/@breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">TikTok</span><span class="soc-arr">&nearr;</span></a>
+        <a href="https://open.spotify.com/artist/3yobavZLdSYOHnAqCPN8AD" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">Spotify</span><span class="soc-arr">&nearr;</span></a>
+        <a href="https://github.com/breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">GitHub</span><span class="soc-arr">&nearr;</span></a>
+        <a href="https://x.com/breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">X</span><span class="soc-arr">&nearr;</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="ctn">
+    <div class="footer-in">
+      <div class="footer-t">BreadFlows &mdash; Dublin, Ireland</div>
+      <a href="#hero" class="footer-bk">Back to top &uarr;</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* PRELOADER */
+!function(){
+  var f=document.getElementById('pf'),c=document.getElementById('pc'),p=document.getElementById('pre'),v=0;
+  function t(){
+    v+=Math.random()*12+3;if(v>100)v=100;
+    f.style.width=v+'%';c.textContent=String(Math.floor(v)).padStart(3,'0');
+    if(v<100){requestAnimationFrame(t)}
+    else{setTimeout(function(){gsap.to(p,{opacity:0,duration:.6,ease:'power2.inOut',onComplete:function(){p.style.display='none';heroAnim()}})},300)}
+  }
+  requestAnimationFrame(t);
+}();
+
+/* HERO */
+function heroAnim(){
+  var el=document.getElementById('hn'),txt=el.textContent;
+  el.innerHTML='';
+  txt.split('\n').filter(Boolean).forEach(function(line,li,arr){
+    line.trim().split('').forEach(function(ch){
+      var s=document.createElement('span');s.className='ch';s.textContent=ch;el.appendChild(s);
+    });
+    if(li<arr.length-1)el.appendChild(document.createElement('br'));
+  });
+  gsap.to('.hero-name .ch',{opacity:1,y:0,duration:.8,stagger:.04,ease:'power3.out',delay:.1});
+  gsap.from('.hero-sub',{opacity:0,x:-20,duration:.8,delay:.6,ease:'power2.out'});
+  gsap.from('.hero-scroll',{opacity:0,duration:1,delay:1.2});
+}
+
+/* REVEALS */
+document.querySelectorAll('.rv').forEach(function(el){
+  ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){el.classList.add('vis')},once:true});
+});
+document.querySelectorAll('.rvs').forEach(function(el){
+  ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){
+    el.classList.add('vis');
+    Array.from(el.children).forEach(function(c,i){c.style.transitionDelay=(i*.08)+'s'});
+  },once:true});
+});
+
+/* TIMELINE ERAS */
+document.querySelectorAll('.era').forEach(function(era){
+  ScrollTrigger.create({trigger:era,start:'top 80%',onEnter:function(){
+    gsap.to(era,{opacity:1,y:0,duration:.7,delay:.05,ease:'power2.out'});
+  },once:true});
+});
+
+/* TIMELINE FILL */
+var ts=document.getElementById('timeline'),tf=document.getElementById('tlf');
+if(ts&&tf){
+  ScrollTrigger.create({trigger:ts,start:'top 60%',end:'bottom 40%',onUpdate:function(s){tf.style.height=(s.progress*100)+'%'}});
+}
+
+/* GALLERY — shuffled on every refresh */
+!function(){
+  var B='https://cdn.prod.website-files.com/693b521ebc04b486a4ecffe9/693b521fbc04b486a4ed00';
+  var C='https://cdn.prod.website-files.com/693b521fbc04b486a4ed00db/';
+  var imgs=[
+    B+'ca_8ed66bb2053751f6fd574fd305d50756_cinto_as_69865_portrait_photography.jpg',
+    B+'cb_fba0f65b785e621691cccb4ec5588376_luckingx2_a_close-up_shot_of_a_slender_elegant.jpg',
+    B+'cd_5abdebee3bd5811c9468bf4dc83977a7_u6112551873_mujer_futurista.png',
+    B+'cc_5421905bc1d67e3caea39854b766ad32_pnaque_A_rough_dark-red_space_rock_with_jagged.jpg',
+    B+'ce_9b2330ca34d0a0b4fec299b7ecd9a1a3_u1137815341_A_futuristic_black_carbon_sci-fi.png',
+    B+'cf_1cde5612830e286412a935c961f83660_ondrejjjjjjjjjjj_close_up_photo_of_cyber_soldiers.jpg',
+    B+'d0_81004c06ffd6a6472cfbc89c211ae887_pegahkhabazi_a_futuristic_fashion_design.png',
+    B+'e1_b9fcc6fa7ea94a9ea4d3f9249f0a1fed_dazzling_lemur_12601_A_white_minimalist.jpg',
+    B+'b0_a1afdbc8b066b4f6851f0d761eec2fc6_linzy1111_An_abstract_futuristic_character_named.png',
+    B+'b1_8382041bb74decd2a8326c7b421ac69a_pkorion8_a_cyberpunk_character_look.png',
+    B+'af_237eee75bcbcd10e99b4ef4939f028f7_viktoriia725_A_powerful_East_Asian_woman.png',
+    B+'ab_2fbd6954c1b0f3449f4d018fb05ed391_u7632887887_Futuristic_sarafan_made_of_reflective_linen.png',
+    B+'b4_8df57e6d451887712044a27eb37768ca_pacollonson_mujer_futurista_con_casco.png',
+    B+'b2_0eb3a4376cd83c86b502c4624a967721_thilo2025_kia_ev3_cinematic%20%283%29.png',
+    B+'b3_40132758458738d5e24bace08aae7d5a_kai0226_Hyperrealistic_cyberpunk_portrait%20%282%29.png',
+    B+'a1_27aea619c635c96f1474ac54a4ddf2a6_kai0226_Hyperrealistic_cyberpunk.jpg',
+    B+'c3_39639deec6848d744fdf659281b10e9c_nocodeuniversity_pop_music_girl_with_headsets%20%282%29.jpg',
+    B+'c4_b935796f8601739a8b6c0f89572581c5_marcosdomenech_Photo_Type_high_fashion_editorial_photography%20%282%29.jpg',
+    B+'c5_77874b2baebda61cece3a3ebf102585b_techiedesigner_A_person_wearing_red_aging_rapidly%20%282%29.jpg',
+    B+'c6_81ec6a092bc6266c90a0d340895a36f9_kai0226_Hyperrealistic_cyberpunk_portrait.jpg',
+    B+'c7_28c4fbc972012a3a72a064bde4e5978e_ko6pah_Realistic_photo_Dark_cyberpunk%20%282%29.jpg',
+    B+'c8_e2c878a21a32560e7939c39d6b738432_jacob_63363_a_montage_of_a_concert_a_stadium%20%282%29.jpg',
+    B+'c9_ed5a36adc8e7b21f8469843aa68288ea_thilo2025_kia_ev3_cinematic%20%282%29.jpg',
+    B+'a3_d6fabafda104a8ba1e9594bc866e2e57_thilo2025_kia_ev3_cinematic.jpg',
+    B+'bc_a4dd4f5b51fc16d64d4acb67f4fd8f2c_zenchikai_a_cinematic_YouTube_banner_for_an_investigative.jpg',
+    B+'c1_a6ab8397ff1e3431d82d72971e536871_zenchikai_a_cinematic_YouTube_banner_for_an%20%283%29.jpg',
+    B+'b5_Vinyl.png',
+    C+'6947f7d53532b48ed3d7c02f_00.png',
+    C+'6947f69330df146ed592ebdd_Lucid_Origin_Hyperrealistic_2027_black_project_scifi_scene_luc_1.jpg',
+    C+'6947f5ee0e1defa105484907_5.png',
+    C+'6947f3c39ddf4426684067ee_iyg.png',
+    C+'6947f386bcfc762a5058fb3c_Leonardo_Kino_XL_Medium_shot_of_Malik_standing_tall_in_the_chu_0.jpg',
+    C+'6947f35699074eff962ce291_1.png',
+    C+'6947f2abf1a6ac093abb9794_Leonardo_Kino_XL_A_warped_chaotic_rift_tearing_through_space_c_1.jpg'
+  ];
+  // Fisher-Yates shuffle
+  for(var i=imgs.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=imgs[i];imgs[i]=imgs[j];imgs[j]=t}
+  var grid=document.getElementById('gal');
+  imgs.forEach(function(src,idx){
+    var cell=document.createElement('div');cell.className='gal-cell';
+    var img=document.createElement('img');img.src=src;img.alt='';img.loading='lazy';
+    cell.appendChild(img);grid.appendChild(cell);
+    gsap.from(cell,{opacity:0,y:30,duration:.6,delay:(idx%4)*.1,ease:'power2.out',scrollTrigger:{trigger:cell,start:'top 90%',once:true}});
+  });
+}();
+
+/* TOOLS GRID STAGGER */
+document.querySelectorAll('.tools-grid').forEach(function(grid){
+  ScrollTrigger.create({trigger:grid,start:'top 85%',onEnter:function(){
+    grid.classList.add('vis');
+    Array.from(grid.children).forEach(function(c,i){c.style.transitionDelay=(i*.06)+'s'});
+  },once:true});
+});
+
+/* PLAYLIST THUMBNAILS (auto-updating via noembed) */
+document.querySelectorAll('.era-thumb[data-pl]').forEach(function(thumb){
+  var pl=thumb.getAttribute('data-pl');
+  var url='https://noembed.com/embed?url=https://www.youtube.com/playlist?list='+pl;
+  fetch(url).then(function(r){return r.json()}).then(function(d){
+    if(d.thumbnail_url){
+      thumb.style.backgroundImage='url('+d.thumbnail_url+')';
+    }
+  }).catch(function(){});
+});
+</script>
+</body>
+</html>
