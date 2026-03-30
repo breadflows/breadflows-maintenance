@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <title>BreadFlows</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="BreadFlows. Filmmaker, music producer, world-builder.">
+<meta name="description" content="BreadFlows. Independent creative and world-builder.">
 <meta property="og:title" content="BreadFlows">
-<meta property="og:description" content="Filmmaker, music producer, world-builder.">
+<meta property="og:description" content="Independent creative and world-builder.">
 <meta property="og:type" content="website">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -162,6 +162,12 @@ section{position:relative}
 .rv.vis{opacity:1;transform:translateY(0);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .rvs>*{opacity:0;transform:translateY(16px)}
 .rvs.vis>*{opacity:1;transform:translateY(0);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.tl-toggle{display:inline-flex;align-items:center;gap:10px;padding:12px 24px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--text-2);border:1px solid var(--border);background:none;cursor:pointer;transition:all .3s}
+.tl-toggle:hover{border-color:var(--accent-dim);color:var(--accent)}
+.tl-toggle-arrow{transition:transform .3s;font-size:13px}
+.tl-toggle.open .tl-toggle-arrow{transform:rotate(90deg)}
+.tl-collapsible{max-height:0;overflow:hidden;transition:max-height .6s cubic-bezier(.16,1,.3,1)}
+.tl-collapsible.open{max-height:5000px}
 </style>
 </head>
 <body>
@@ -184,7 +190,7 @@ section{position:relative}
     <div class="hero-name" id="hn">BREAD<br>FLOWS</div>
     <div class="hero-sub">
       <div class="hero-sub-line"></div>
-      <div class="hero-sub-text">Filmmaker / Music Producer / World-Builder</div>
+      <div class="hero-sub-text">Independent Creative / World-Builder</div>
     </div>
   </div>
   <div class="hero-scroll">scroll</div>
@@ -199,11 +205,11 @@ section{position:relative}
         <div class="now-title rv">Building <span class="hl">AXIOMORT</span>.<br>A cinematic film.</div>
       </div>
       <div>
-        <div class="now-desc rv">A cosmic lion infected by a black ink parasite. Civilizations trapped inside a living universe. A pilgrimage toward a mountain to retrieve something that was stolen. The whole thing is a cinematic film where the soundtrack tells the story.</div>
+        <div class="now-desc rv">A cosmic lion infected by a black ink parasite. Civilizations trapped inside a living universe. A pilgrimage toward a mountain to heal what's been corrupted. The whole thing is a cinematic film where the soundtrack tells the story.</div>
         <div class="now-status rv">
           <div class="st-item"><span class="st-lbl">Status</span><span class="st-val on">In Production</span></div>
-          <div class="st-item"><span class="st-lbl">Stage</span><span class="st-val">Animatic / Storyboard</span></div>
-          <div class="st-item"><span class="st-lbl">Format</span><span class="st-val">57 min</span></div>
+          <div class="st-item"><span class="st-lbl">Stage</span><span class="st-val">Storyboard / Development</span></div>
+          <div class="st-item"><span class="st-lbl">Format</span><span class="st-val">~57 min (est.)</span></div>
         </div>
         <div class="now-links rv">
           <a href="https://axiomort.com" target="_blank" rel="noopener" class="now-btn primary">AXIOMORT.COM &nearr;</a>
@@ -218,6 +224,8 @@ section{position:relative}
 <section class="tl-section" id="timeline">
   <div class="ctn">
     <div class="slbl rv">The Timeline</div>
+    <button class="tl-toggle rv" id="tl-btn"><span>View History</span><span class="tl-toggle-arrow">&#9656;</span></button>
+    <div class="tl-collapsible" id="tl-collapse">
     <div class="tl">
       <div class="tl-line"><div class="tl-fill" id="tlf"></div></div>
 
@@ -291,7 +299,7 @@ section{position:relative}
         <div class="era-dot"></div>
         <div class="era-year">2025 - Present</div>
         <div class="era-name">SIGNAL_404 // DIMENSIONAL EXTRACTS</div>
-        <div class="era-desc">Archived transmissions from a previous universe cycle. The old music videos recontextualized as lore. Everything before AXIOMORT now lives here.</div>
+        <div class="era-desc">Fragmented transmissions from a collapsing signal. Origin unknown.</div>
         <a class="era-card" href="https://www.youtube.com/playlist?list=PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1" target="_blank" rel="noopener">
           <div class="era-thumb" data-pl="PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1"></div>
           <div class="era-card-info"><div class="era-card-label">YouTube Playlist</div><div class="era-card-name">signal_404</div></div>
@@ -299,10 +307,9 @@ section{position:relative}
       </div>
 
     </div>
+    </div>
   </div>
 </section>
-
-<!-- GALLERY -->
 <section class="gal-section" id="gallery">
   <div class="ctn">
     <div class="slbl rv">Gallery</div>
@@ -372,10 +379,10 @@ section{position:relative}
     <div class="slbl rv">Connect</div>
     <div class="conn-grid">
       <div class="dc-card rv">
-        <div class="dc-lbl">Discord Community</div>
-        <div class="dc-title">Join the Server</div>
-        <div class="dc-desc">Where the work gets discussed before it goes public. Production updates, early cuts, and the occasional unhinged conversation.</div>
-        <a href="#" class="dc-btn">Join Discord</a>
+        <div class="dc-lbl">Discord</div>
+        <div class="dc-title">Coming Soon</div>
+        <div class="dc-desc">Not live yet.</div>
+        <span class="dc-btn" style="opacity:0.4;pointer-events:none">Coming Soon</span>
       </div>
       <div class="soc-links rvs">
         <a href="https://youtube.com/@breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">YouTube</span><span class="soc-arr">&nearr;</span></a>
@@ -442,7 +449,16 @@ document.querySelectorAll('.rvs').forEach(function(el){
   },once:true});
 });
 
-/* TIMELINE ERAS */
+/* TIMELINE TOGGLE */
+var tlBtn=document.getElementById('tl-btn'),tlCol=document.getElementById('tl-collapse');
+if(tlBtn&&tlCol){
+  tlBtn.addEventListener('click',function(){
+    var open=tlCol.classList.toggle('open');
+    tlBtn.classList.toggle('open');
+    tlBtn.querySelector('span').textContent=open?'Hide History':'View History';
+    if(open)ScrollTrigger.refresh();
+  });
+}
 document.querySelectorAll('.era').forEach(function(era){
   ScrollTrigger.create({trigger:era,start:'top 80%',onEnter:function(){
     gsap.to(era,{opacity:1,y:0,duration:.7,delay:.05,ease:'power2.out'});
