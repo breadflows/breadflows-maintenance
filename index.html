@@ -223,7 +223,7 @@ section{position:relative}
 <!-- TIMELINE -->
 <section class="tl-section" id="timeline">
   <div class="ctn">
-    <div class="slbl rv">The Timeline</div>
+    <div class="slbl rv">Channel History</div>
     <button class="tl-toggle rv" id="tl-btn"><span>View History</span><span class="tl-toggle-arrow">&#9656;</span></button>
     <div class="tl-collapsible" id="tl-collapse">
     <div class="tl">
@@ -380,9 +380,7 @@ section{position:relative}
     <div class="conn-grid">
       <div class="dc-card rv">
         <div class="dc-lbl">Discord</div>
-        <div class="dc-title">Coming Soon</div>
-        <div class="dc-desc">Not live yet.</div>
-        <span class="dc-btn" style="opacity:0.4;pointer-events:none">Coming Soon</span>
+        <div class="dc-title">TBD</div>
       </div>
       <div class="soc-links rvs">
         <a href="https://youtube.com/@breadflows" target="_blank" rel="noopener" class="soc-link"><span class="soc-name">YouTube</span><span class="soc-arr">&nearr;</span></a>
@@ -400,7 +398,7 @@ section{position:relative}
 <footer class="footer">
   <div class="ctn">
     <div class="footer-in">
-      <div class="footer-t">BreadFlows &mdash; Dublin, Ireland</div>
+      <div class="footer-t">BreadFlows</div>
       <a href="#hero" class="footer-bk">Back to top &uarr;</a>
     </div>
   </div>
@@ -450,25 +448,27 @@ document.querySelectorAll('.rvs').forEach(function(el){
 });
 
 /* TIMELINE TOGGLE */
-var tlBtn=document.getElementById('tl-btn'),tlCol=document.getElementById('tl-collapse');
+var tlBtn=document.getElementById('tl-btn'),tlCol=document.getElementById('tl-collapse'),tlST=null;
 if(tlBtn&&tlCol){
   tlBtn.addEventListener('click',function(){
     var open=tlCol.classList.toggle('open');
     tlBtn.classList.toggle('open');
     tlBtn.querySelector('span').textContent=open?'Hide History':'View History';
-    if(open)ScrollTrigger.refresh();
+    if(open){
+      setTimeout(function(){
+        ScrollTrigger.refresh();
+        if(!tlST){
+          var ts=document.getElementById('timeline'),tf=document.getElementById('tlf');
+          if(ts&&tf){
+            tlST=ScrollTrigger.create({trigger:ts,start:'top 60%',end:'bottom 40%',onUpdate:function(s){tf.style.height=(s.progress*100)+'%'}});
+          }
+          document.querySelectorAll('.era').forEach(function(era){
+            gsap.to(era,{opacity:1,y:0,duration:.7,delay:.05,ease:'power2.out',scrollTrigger:{trigger:era,start:'top 80%',once:true}});
+          });
+        }
+      },100);
+    }
   });
-}
-document.querySelectorAll('.era').forEach(function(era){
-  ScrollTrigger.create({trigger:era,start:'top 80%',onEnter:function(){
-    gsap.to(era,{opacity:1,y:0,duration:.7,delay:.05,ease:'power2.out'});
-  },once:true});
-});
-
-/* TIMELINE FILL */
-var ts=document.getElementById('timeline'),tf=document.getElementById('tlf');
-if(ts&&tf){
-  ScrollTrigger.create({trigger:ts,start:'top 60%',end:'bottom 40%',onUpdate:function(s){tf.style.height=(s.progress*100)+'%'}});
 }
 
 /* GALLERY — shuffled on every refresh */
@@ -489,9 +489,7 @@ if(ts&&tf){
     B+'af_237eee75bcbcd10e99b4ef4939f028f7_viktoriia725_A_powerful_East_Asian_woman.png',
     B+'ab_2fbd6954c1b0f3449f4d018fb05ed391_u7632887887_Futuristic_sarafan_made_of_reflective_linen.png',
     B+'b4_8df57e6d451887712044a27eb37768ca_pacollonson_mujer_futurista_con_casco.png',
-    B+'b2_0eb3a4376cd83c86b502c4624a967721_thilo2025_kia_ev3_cinematic%20%283%29.png',
     B+'b3_40132758458738d5e24bace08aae7d5a_kai0226_Hyperrealistic_cyberpunk_portrait%20%282%29.png',
-    B+'a1_27aea619c635c96f1474ac54a4ddf2a6_kai0226_Hyperrealistic_cyberpunk.jpg',
     B+'c3_39639deec6848d744fdf659281b10e9c_nocodeuniversity_pop_music_girl_with_headsets%20%282%29.jpg',
     B+'c4_b935796f8601739a8b6c0f89572581c5_marcosdomenech_Photo_Type_high_fashion_editorial_photography%20%282%29.jpg',
     B+'c5_77874b2baebda61cece3a3ebf102585b_techiedesigner_A_person_wearing_red_aging_rapidly%20%282%29.jpg',
