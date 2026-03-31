@@ -17,7 +17,7 @@
   --bg:#0a0a0a;--bg-raised:#111;--bg-card:#161616;
   --border:#1e1e1e;--border-bright:#2a2a2a;
   --text:#e8e8e8;--text-2:#777;--text-3:#444;
-  --accent:#c8ff00;--accent-dim:#4a5e00;
+  --accent:#d4a54a;--accent-dim:#5c4520;
   --mono:'Azeret Mono','DM Mono',monospace;
   --grid:rgba(255,255,255,0.03);
 }
@@ -84,7 +84,7 @@ section{position:relative}
 .now-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;font-family:var(--mono);font-size:10px;letter-spacing:.2em;text-transform:uppercase;border:1px solid var(--border);color:var(--text-2);transition:all .3s;cursor:pointer;background:none}
 .now-btn:hover{border-color:var(--accent-dim);color:var(--accent)}
 .now-btn.primary{background:var(--accent);color:var(--bg);border-color:var(--accent);font-weight:600}
-.now-btn.primary:hover{background:#b0e000}
+.now-btn.primary:hover{background:#c4952f}
 @media(max-width:768px){.now-grid{grid-template-columns:1fr;gap:32px}}
 
 /* ---- TIMELINE ---- */
@@ -95,7 +95,7 @@ section{position:relative}
 .era{position:relative;padding-left:48px;padding-bottom:64px;opacity:0;transform:translateY(20px)}
 .era:last-child{padding-bottom:0}
 .era-dot{position:absolute;left:-4px;top:6px;width:9px;height:9px;border:1px solid var(--border-bright);background:var(--bg);transition:border-color .4s,background .4s}
-.era.active .era-dot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 12px rgba(200,255,0,.2)}
+.era.active .era-dot{border-color:var(--accent);background:var(--accent);box-shadow:0 0 12px rgba(212,165,74,.2)}
 .era-year{font-size:10px;letter-spacing:.3em;color:var(--text-3);margin-bottom:8px}
 .era-name{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:10px;transition:color .3s}
 .era:hover .era-name{color:var(--accent)}
