@@ -1168,43 +1168,171 @@ gsap.registerPlugin(ScrollTrigger);
 
   if (!grid || !dialog || !frame || !titleEl || !closeBtn) return;
 
-  fetch('/api/youtube/playlist-videos?playlist_id=PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1')
-    .then(function(r) { return r.json(); })
-    .then(function(res) {
-      var videos = res.data || [];
-      if (!videos.length) {
-        grid.innerHTML = '<div class="vid-empty"><h3>No videos found</h3><p>Could not retrieve archive videos at this time.</p></div>';
-        return;
-      }
-
-      grid.innerHTML = videos.map(function(v) {
-        return '<article class="vid-card" data-embed="' + esc(v.embed_url) + '" data-title="' + esc(v.title) + '">' +
-          '<div class="vid-thumb-wrapper">' +
-            '<div class="vid-thumb" style="background-image: url(\'' + esc(v.thumbnail) + '\')"></div>' +
-            '<div class="vid-play-overlay">' +
-              '<div class="vid-play-icon">&#9656;</div>' +
-            '</div>' +
-          '</div>' +
-          '<div class="vid-info">' +
-            '<div class="vid-card-title">' + esc(v.title) + '</div>' +
-            '<div class="vid-meta">' + esc(v.published) + '</div>' +
-          '</div>' +
-        '</article>';
-      }).join('');
-
-      grid.querySelectorAll('.vid-card').forEach(function(card) {
-        card.addEventListener('click', function() {
-          var embedUrl = card.getAttribute('data-embed');
-          var title = card.getAttribute('data-title');
-          openPlayer(title, embedUrl);
-        });
+  function loadVideos() {
+    fetch('/api/youtube/playlist-videos?playlist_id=PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1')
+      .then(function(r) {
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function(res) {
+        renderVideos(res.data || []);
+      })
+      .catch(function(err) {
+        console.warn("Backend video API unavailable, falling back to client-side RSS parse:", err);
+        fetchClientFallback();
       });
+  }
 
-      if (window.ScrollTrigger) { ScrollTrigger.refresh(); }
-    })
-    .catch(function() {
-      grid.innerHTML = '<div class="vid-empty"><h3>Archive Connection Error</h3><p>Failed to connect to video archives. Make sure the server backend is running.</p></div>';
+  function fetchClientFallback() {
+    var playlistId = 'PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1';
+    var target = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId;
+    var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
+
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(res) {
+        if (!res || !res.contents) {
+          throw new Error("No contents in CORS proxy response");
+        }
+        var parser = new DOMParser();
+        var xmlDoc = parser.parseFromString(res.contents, "text/xml");
+        var entries = xmlDoc.getElementsByTagName("entry");
+        var videos = [];
+
+        // Prepend custom videos
+        var customVideos = [
+          {
+            "id": "gOlBsgPE7s8",
+            "title": "Sovereign Zero: The Vesuvius Error",
+            "published": "07 Jan 2026",
+            "thumbnail": "https://img.youtube.com/vi/gOlBsgPE7s8/mqdefault.jpg",
+            "watch_url": "https://www.youtube.com/watch?v=gOlBsgPE7s8",
+            "embed_url": "https://www.youtube.com/embed/gOlBsgPE7s8"
+          },
+          {
+            "id": "gquEew9RZuc",
+            "title": "The Orbital Frequency from the Phantom Glide | AI Anime Pilot Concept",
+            "published": "06 Feb 2026",
+            "thumbnail": "https://img.youtube.com/vi/gquEew9RZuc/mqdefault.jpg",
+            "watch_url": "https://www.youtube.com/watch?v=gquEew9RZuc",
+            "embed_url": "https://www.youtube.com/embed/gquEew9RZuc"
+          }
+        ];
+        customVideos.forEach(function(v) { videos.push(v); });
+
+        // Parse XML entries
+        for (var i = 0; i < entries.length; i++) {
+          var entry = entries[i];
+          var videoIdEl = entry.getElementsByTagName("yt:videoId")[0] || entry.getElementsByTagName("videoId")[0];
+          var titleEl = entry.getElementsByTagName("title")[0];
+          var publishedEl = entry.getElementsByTagName("published")[0];
+
+          if (videoIdEl && titleEl) {
+            var videoId = videoIdEl.textContent.trim();
+            var title = titleEl.textContent.trim();
+            var published = publishedEl ? publishedEl.textContent.trim() : "";
+
+            // Apply blacklist filter
+            var titleLower = title.toLowerCase();
+            if (
+              titleLower.indexOf("studio signal intro") !== -1 ||
+              titleLower.indexOf("ink of infinity") !== -1 ||
+              (titleLower.indexOf("project the rift") !== -1 && titleLower.indexOf("teaser") !== -1) ||
+              titleLower.indexOf("nobody") !== -1
+            ) {
+              continue;
+            }
+
+            videos.push({
+              "id": videoId,
+              "title": title,
+              "published": formatDate(published),
+              "thumbnail": "https://img.youtube.com/vi/" + videoId + "/mqdefault.jpg",
+              "watch_url": "https://www.youtube.com/watch?v=" + videoId,
+              "embed_url": "https://www.youtube.com/embed/" + videoId
+            });
+          }
+        }
+
+        // Sort descending (latest first)
+        var monthsMap = {
+          "jan": 0, "feb": 1, "mar": 2, "apr": 3, "may": 4, "jun": 5,
+          "jul": 6, "aug": 7, "sep": 8, "oct": 9, "nov": 10, "dec": 11
+        };
+        
+        function parseDateKey(publishedStr) {
+          try {
+            var parts = publishedStr.split(' ');
+            if (parts.length === 3) {
+              var day = parseInt(parts[0], 10);
+              var month = monthsMap[parts[1].toLowerCase()];
+              var year = parseInt(parts[2], 10);
+              return new Date(year, month, day);
+            }
+          } catch(e) {}
+          return new Date(0);
+        }
+
+        videos.sort(function(a, b) {
+          return parseDateKey(b.published) - parseDateKey(a.published);
+        });
+
+        renderVideos(videos);
+      })
+      .catch(function(err) {
+        console.error("Client fallback parse failed:", err);
+        grid.innerHTML = '<div class="vid-empty"><h3>Archive Connection Error</h3><p>Failed to connect to video archives.</p></div>';
+      });
+  }
+
+  function formatDate(isoStr) {
+    if (!isoStr) return "Recent";
+    try {
+      var date = new Date(isoStr);
+      var day = String(date.getDate()).padStart(2, '0');
+      var months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+      var month = months[date.getMonth()];
+      var year = date.getFullYear();
+      if (isNaN(year)) return "Recent";
+      return day + " " + month + " " + year;
+    } catch(e) {
+      return "Recent";
+    }
+  }
+
+  function renderVideos(videos) {
+    if (!videos.length) {
+      grid.innerHTML = '<div class="vid-empty"><h3>No videos found</h3><p>Could not retrieve archive videos at this time.</p></div>';
+      return;
+    }
+
+    grid.innerHTML = videos.map(function(v) {
+      return '<article class="vid-card" data-embed="' + esc(v.embed_url) + '" data-title="' + esc(v.title) + '">' +
+        '<div class="vid-thumb-wrapper">' +
+          '<div class="vid-thumb" style="background-image: url(\'' + esc(v.thumbnail) + '\')"></div>' +
+          '<div class="vid-play-overlay">' +
+            '<div class="vid-play-icon">&#9656;</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="vid-info">' +
+          '<div class="vid-card-title">' + esc(v.title) + '</div>' +
+          '<div class="vid-meta">' + esc(v.published) + '</div>' +
+        '</div>' +
+      '</article>';
+    }).join('');
+
+    grid.querySelectorAll('.vid-card').forEach(function(card) {
+      card.addEventListener('click', function() {
+        var embedUrl = card.getAttribute('data-embed');
+        var title = card.getAttribute('data-title');
+        openPlayer(title, embedUrl);
+      });
     });
+
+    if (window.ScrollTrigger) { ScrollTrigger.refresh(); }
+  }
+
+  loadVideos();
 
   function openPlayer(title, embedUrl) {
     titleEl.textContent = title;
@@ -1260,7 +1388,7 @@ gsap.registerPlugin(ScrollTrigger);
   var wrap=document.getElementById('now-bg');
   var v=document.getElementById('now-bg-video');
   if(!wrap||!v){return}
-  var base=(window.location.protocol==='file:')?'video/':'/video/';
+  var base='video/';
   var mp4=base+'preview.mp4';
   var poster=base+'preview-poster.jpg';
   wrap.style.backgroundImage='url("'+poster+'")';
