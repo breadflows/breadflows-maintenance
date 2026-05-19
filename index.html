@@ -1418,10 +1418,18 @@ gsap.registerPlugin(ScrollTrigger);
   v.defaultMuted=true;
   v.muted=true;
   v.setAttribute('playsinline','');
-  function play(){v.play().catch(function(){})}
+  function play(){
+    v.play().then(function() {
+      v.style.display = 'block';
+    }).catch(function(err){
+      v.style.display = 'none';
+      wrap.style.backgroundImage='url("'+poster+'")';
+    });
+  }
   v.addEventListener('loadeddata',play);
   v.addEventListener('canplay',play);
   v.addEventListener('error',function(){
+    v.style.display = 'none';
     wrap.style.backgroundImage='url("'+poster+'")';
   });
   if(v.readyState>=2){play()}else{v.load();play()}
