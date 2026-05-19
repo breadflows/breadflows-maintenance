@@ -1183,19 +1183,40 @@ gsap.registerPlugin(ScrollTrigger);
       });
   }
 
+  function fetchProxied(targetUrl) {
+    var url1 = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(targetUrl);
+    return fetch(url1)
+      .then(function(r) {
+        if (!r.ok) throw new Error("Codetabs failed");
+        return r.text();
+      })
+      .catch(function() {
+        var url2 = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
+        return fetch(url2)
+          .then(function(r) {
+            if (!r.ok) throw new Error("AllOrigins failed");
+            return r.json();
+          })
+          .then(function(json) {
+            if (json && json.contents) {
+              return json.contents;
+            }
+            throw new Error("Invalid AllOrigins response");
+          });
+      });
+  }
+
   function fetchClientFallback() {
     var playlistId = 'PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1';
     var target = 'https://www.youtube.com/feeds/videos.xml?playlist_id=' + playlistId;
-    var url = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
 
-    fetch(url)
-      .then(function(r) { return r.json(); })
-      .then(function(res) {
-        if (!res || !res.contents) {
-          throw new Error("No contents in CORS proxy response");
+    fetchProxied(target)
+      .then(function(xmlText) {
+        if (!xmlText) {
+          throw new Error("No XML response text");
         }
         var parser = new DOMParser();
-        var xmlDoc = parser.parseFromString(res.contents, "text/xml");
+        var xmlDoc = parser.parseFromString(xmlText, "text/xml");
         var entries = xmlDoc.getElementsByTagName("entry");
         var videos = [];
 
@@ -1845,46 +1866,58 @@ document.querySelectorAll('.era-thumb[data-pl], .radio-dial[data-pl]').forEach(f
   if (!pl || pl === 'none') return;
   
   var isLocalServer = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && window.location.port === '8000';
-  var url;
+  
   if (isLocalServer) {
-    url = '/api/youtube/playlist-thumbnail?list_id=' + pl;
+    var url = '/api/youtube/playlist-thumbnail?list_id=' + pl;
+    fetch(url)
+      .then(function(r) { return r.json(); })
+      .then(function(d) {
+        if (d && d.thumbnail_url) {
+          thumb.style.backgroundImage = 'url("' + d.thumbnail_url + '")';
+        }
+      })
+      .catch(function() {
+        fetchExternalThumbnail(pl);
+      });
   } else {
-    var target = 'https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=' + pl + '&format=json';
-    url = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
+    fetchExternalThumbnail(pl);
   }
 
-  fetch(url)
-    .then(function(r) { return r.json(); })
-    .then(function(d) {
-      var thumbUrl = '';
-      if (isLocalServer) {
-        thumbUrl = d.thumbnail_url;
-      } else {
-        if (d.contents) {
-          var parsed = JSON.parse(d.contents);
-          thumbUrl = parsed.thumbnail_url;
+  function fetchExternalThumbnail(playlistId) {
+    var target = 'https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=' + playlistId + '&format=json';
+    
+    var url1 = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target);
+    fetch(url1)
+      .then(function(r) {
+        if (!r.ok) throw new Error("Codetabs failed");
+        return r.text();
+      })
+      .then(function(text) {
+        var parsed = JSON.parse(text);
+        if (parsed && parsed.thumbnail_url) {
+          thumb.style.backgroundImage = 'url("' + parsed.thumbnail_url + '")';
         }
-      }
-      if (thumbUrl) {
-        thumb.style.backgroundImage = 'url("' + thumbUrl + '")';
-      }
-    })
-    .catch(function() {
-      if (isLocalServer) {
-        var target = 'https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=' + pl + '&format=json';
-        var fallbackUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
-        fetch(fallbackUrl)
-          .then(function(r) { return r.json(); })
-          .then(function(d) {
-            if (d.contents) {
-              var parsed = JSON.parse(d.contents);
-              if (parsed.thumbnail_url) {
+      })
+      .catch(function() {
+        var url2 = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
+        fetch(url2)
+          .then(function(r) {
+            if (!r.ok) throw new Error("AllOrigins failed");
+            return r.json();
+          })
+          .then(function(json) {
+            if (json && json.contents) {
+              var parsed = JSON.parse(json.contents);
+              if (parsed && parsed.thumbnail_url) {
                 thumb.style.backgroundImage = 'url("' + parsed.thumbnail_url + '")';
               }
             }
-          }).catch(function(){});
-      }
-    });
+          })
+          .catch(function(e) {
+            console.error("Failed to load thumbnail for playlist " + playlistId, e);
+          });
+      });
+  }
 });
 
 /* ON THE RADAR COLLAPSIBLE TOGGLE */
