@@ -392,7 +392,7 @@ section{position:relative}
 .rv.vis{opacity:1;transform:translateY(0);transition:opacity .8s cubic-bezier(.16,1,.3,1),transform .8s cubic-bezier(.16,1,.3,1)}
 .rvs>*{opacity:0;transform:translateY(16px)}
 .rvs.vis>*{opacity:1;transform:translateY(0);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
-/* ---- FUTURE CRYPTIC ERA STYLES ---- */
+/* ---- FUTURE ERA STYLES ---- */
 .future-card{border:1px dashed #ff3333;background:rgba(255,0,0,0.03);min-height:72px;max-width:420px;width:100%;display:flex;align-items:center;padding:16px 24px;gap:20px;position:relative;overflow:hidden;box-shadow:inset 0 0 15px rgba(255,0,0,0.05);cursor:not-allowed}
 .future-card-icon{font-size:24px;color:#ff3333;font-family:var(--mono);animation:pulse 1s infinite alternate;user-select:none}
 .future-card-info{display:flex;flex-direction:column;z-index:2}
@@ -445,7 +445,7 @@ section{position:relative}
   transition:width 0.1s ease-out;pointer-events:none;
 }
 
-/* ---- TIMELINE RADIO PLAYER DECK ---- */
+/* ---- RADIO PLAYER ---- */
 .timeline-radio{
   margin-top:0;
   max-width:420px;
@@ -465,7 +465,7 @@ section{position:relative}
   align-items:center;
   gap:20px;
 }
-/* Circular Glowing Dial with cover image support */
+/* Circular dial with cover image support */
 .radio-dial-container{
   position:relative;
   width:120px;
@@ -536,7 +536,7 @@ section{position:relative}
 .timeline-radio.playing .play-overlay{
   background:rgba(0,0,0,0.68);
 }
-/* Ensure the icon doesn't spin with the button */
+/* Keep icon static */
 .play-overlay span {
   display:block;
   font-size:18px;
@@ -611,7 +611,7 @@ section{position:relative}
   cursor:not-allowed;
 }
 
-/* Circular Dial Visualizer (Stationary overlay) */
+/* Dial visualizer overlay */
 .dial-visualizer {
   position: absolute;
   bottom: 15px;
@@ -771,7 +771,7 @@ section{position:relative}
   }
 }
 
-/* ---- AUTO ASPECT RATIO DYNAMICS FOR LARGE VIEWPORTS (Ultrawide, 4K, TV) ---- */
+/* ---- ASPECT RATIO ADJUSTMENTS FOR LARGE VIEWPORTS ---- */
 @media (min-width: 1400px) {
   .ctn {
     max-width: 1300px;
@@ -801,7 +801,7 @@ section{position:relative}
   }
 }
 @media (min-width: 2500px) {
-  /* Ultra-wide / 4K / TV Screens */
+  /* Large screens */
   .ctn {
     max-width: 2300px;
     padding: 0 60px;
@@ -1156,7 +1156,41 @@ section{position:relative}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-gsap.registerPlugin(ScrollTrigger);
+if (typeof gsap !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+function sanitizeUrl(u) {
+  if (!u) return '';
+  var clean = String(u).trim();
+  if (/^(javascript|data|vbscript):/i.test(clean)) {
+    return '';
+  }
+  return clean.replace(/['"()]/g, '');
+}
+
+function fetchProxied(targetUrl) {
+  var url1 = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(targetUrl);
+  return fetch(url1)
+    .then(function(r) {
+      if (!r.ok) throw new Error("Codetabs failed");
+      return r.text();
+    })
+    .catch(function() {
+      var url2 = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
+      return fetch(url2)
+        .then(function(r) {
+          if (!r.ok) throw new Error("AllOrigins failed");
+          return r.json();
+        })
+        .then(function(json) {
+          if (json && json.contents) {
+            return json.contents;
+          }
+          throw new Error("Invalid AllOrigins response");
+        });
+    });
+}
 
 /* YOUTUBE VIDEO GRID & PLAYER */
 !function(){
@@ -1180,29 +1214,6 @@ gsap.registerPlugin(ScrollTrigger);
       .catch(function(err) {
         console.warn("Backend video API unavailable, falling back to client-side RSS parse:", err);
         fetchClientFallback();
-      });
-  }
-
-  function fetchProxied(targetUrl) {
-    var url1 = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(targetUrl);
-    return fetch(url1)
-      .then(function(r) {
-        if (!r.ok) throw new Error("Codetabs failed");
-        return r.text();
-      })
-      .catch(function() {
-        var url2 = 'https://api.allorigins.win/get?url=' + encodeURIComponent(targetUrl);
-        return fetch(url2)
-          .then(function(r) {
-            if (!r.ok) throw new Error("AllOrigins failed");
-            return r.json();
-          })
-          .then(function(json) {
-            if (json && json.contents) {
-              return json.contents;
-            }
-            throw new Error("Invalid AllOrigins response");
-          });
       });
   }
 
@@ -1250,6 +1261,9 @@ gsap.registerPlugin(ScrollTrigger);
 
           if (videoIdEl && titleEl) {
             var videoId = videoIdEl.textContent.trim();
+            if (!/^[a-zA-Z0-9_-]+$/.test(videoId)) {
+              continue;
+            }
             var title = titleEl.textContent.trim();
             var published = publishedEl ? publishedEl.textContent.trim() : "";
 
@@ -1328,9 +1342,11 @@ gsap.registerPlugin(ScrollTrigger);
     }
 
     grid.innerHTML = videos.map(function(v) {
-      return '<article class="vid-card" data-embed="' + esc(v.embed_url) + '" data-title="' + esc(v.title) + '">' +
+      var safeEmbed = sanitizeUrl(v.embed_url);
+      var safeThumb = sanitizeUrl(v.thumbnail);
+      return '<article class="vid-card" data-embed="' + esc(safeEmbed) + '" data-title="' + esc(v.title) + '">' +
         '<div class="vid-thumb-wrapper">' +
-          '<div class="vid-thumb" style="background-image: url(\'' + esc(v.thumbnail) + '\')"></div>' +
+          '<div class="vid-thumb" style="background-image: url(\'' + esc(safeThumb) + '\')"></div>' +
           '<div class="vid-play-overlay">' +
             '<div class="vid-play-icon">&#9656;</div>' +
           '</div>' +
@@ -1399,12 +1415,22 @@ gsap.registerPlugin(ScrollTrigger);
     v+=Math.random()*12+3;if(v>100)v=100;
     f.style.width=v+'%';c.textContent=String(Math.floor(v)).padStart(3,'0');
     if(v<100){requestAnimationFrame(t)}
-    else{setTimeout(function(){gsap.to(p,{opacity:0,duration:.6,ease:'power2.inOut',onComplete:function(){p.style.display='none';heroAnim()}})},300)}
+    else{setTimeout(function(){
+      if (typeof gsap !== 'undefined') {
+        gsap.to(p,{opacity:0,duration:.6,ease:'power2.inOut',onComplete:function(){p.style.display='none';heroAnim()}});
+      } else {
+        p.style.opacity = 0;
+        setTimeout(function(){
+          p.style.display='none';
+          heroAnim();
+        }, 600);
+      }
+    },300)}
   }
   requestAnimationFrame(t);
 }();
 
-/* AXIOMORT background video */
+/* Background video */
 !function(){
   var wrap=document.getElementById('now-bg');
   var v=document.getElementById('now-bg-video');
@@ -1457,11 +1483,22 @@ function heroAnim(){
     });
     if(li<arr.length-1)el.appendChild(document.createElement('br'));
   });
-  gsap.to('.hero-name .ch',{opacity:1,y:0,duration:.8,stagger:.04,ease:'power3.out',delay:.1});
-  gsap.from('.hero-sub',{opacity:0,x:-20,duration:.8,delay:.6,ease:'power2.out'});
-  gsap.from('.hero-scroll',{opacity:0,duration:1,delay:1.2});
+  if (typeof gsap !== 'undefined') {
+    gsap.to('.hero-name .ch',{opacity:1,y:0,duration:.8,stagger:.04,ease:'power3.out',delay:.1});
+    gsap.from('.hero-sub',{opacity:0,x:-20,duration:.8,delay:.6,ease:'power2.out'});
+    gsap.from('.hero-scroll',{opacity:0,duration:1,delay:1.2});
+  } else {
+    document.querySelectorAll('.hero-name .ch').forEach(function(c) {
+      c.style.opacity = '1';
+      c.style.transform = 'translateY(0)';
+    });
+    var sub = document.querySelector('.hero-sub');
+    if (sub) { sub.style.opacity = '1'; sub.style.transform = 'none'; }
+    var scroll = document.querySelector('.hero-scroll');
+    if (scroll) { scroll.style.opacity = '1'; }
+  }
 
-  // Superb S to Z Glitch loop with horizontal slicing & subpixel channel drift (AAA Hollywood style)
+  // Glitch loop animation
   var szEl = el.querySelector('.glitch-sz');
   if (szEl) {
     var ghost = szEl.querySelector('.glitch-ghost');
@@ -1472,21 +1509,21 @@ function heroAnim(){
     var glitchChars = ['S', 'Z', 'X', '?', '_', '%', '2', '/'];
 
     function doBurst() {
-      var steps = Math.floor(Math.random() * 5) + 6; // 6 to 10 rapid state changes
+      var steps = Math.floor(Math.random() * 5) + 6; // State change count
       var step = 0;
 
-      // Hide stable character, reveal subpixel layers
+      // Switch layers
       ghost.style.opacity = '0';
       layers.forEach(function(l) { l.style.opacity = '1'; });
 
       function runStep() {
         if (step < steps) {
-          // Micro-flicker: randomize text content independently per color channel
+          // Randomize character channels
           layerR.textContent = Math.random() < 0.6 ? 'Z' : glitchChars[Math.floor(Math.random() * glitchChars.length)];
           layerG.textContent = Math.random() < 0.4 ? 'S' : 'Z';
           layerB.textContent = Math.random() < 0.5 ? 'Z' : glitchChars[Math.floor(Math.random() * glitchChars.length)];
 
-          // Chromatic Channel Separation: translate and skew layers independently
+          // Channel separation translation
           var rx = (Math.random() * 12 - 6).toFixed(1);
           var ry = (Math.random() * 4 - 2).toFixed(1);
           var gx = (Math.random() * 6 - 3).toFixed(1);
@@ -1497,7 +1534,7 @@ function heroAnim(){
           layerG.style.transform = 'translate3d(' + gx + 'px, 0, 0)';
           layerB.style.transform = 'translate3d(' + bx + 'px, ' + by + 'px, 0) skewX(' + (Math.random() * 24 - 12).toFixed(1) + 'deg)';
 
-          // Raster Slices: Apply random horizontal clipPath crops to simulate line tears
+          // Clip path raster slicing
           var clipR_top = Math.floor(Math.random() * 45);
           var clipR_bot = Math.floor(Math.random() * 45);
           var clipG_top = Math.floor(Math.random() * 50);
@@ -1510,9 +1547,9 @@ function heroAnim(){
           layerB.style.clipPath = 'inset(' + clipB_top + '% 0 ' + clipB_bot + '% 0)';
 
           step++;
-          setTimeout(runStep, Math.random() * 45 + 20); // 20ms - 65ms rapid speed
+          setTimeout(runStep, Math.random() * 45 + 20); // Set timeout
         } else {
-          // Restore stable character, hide colored layers
+          // Restore stable character and hide layers
           ghost.style.opacity = '1';
           layers.forEach(function(l) {
             l.style.opacity = '0';
@@ -1521,31 +1558,40 @@ function heroAnim(){
             l.textContent = 'S';
           });
 
-          // Wait before the next interference cycle
+          // Set delay before next burst
           setTimeout(doBurst, Math.random() * 3500 + 1500);
         }
       }
       runStep();
     }
-    // Start after loading transition finishes
+    // Initialize animation
     setTimeout(doBurst, 3000);
   }
 }
 
 /* REVEALS */
 document.querySelectorAll('.rv').forEach(function(el){
-  ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){el.classList.add('vis')},once:true});
+  if (window.ScrollTrigger) {
+    ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){el.classList.add('vis')},once:true});
+  } else {
+    el.classList.add('vis');
+  }
 });
 document.querySelectorAll('.rvs').forEach(function(el){
-  ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){
+  if (window.ScrollTrigger) {
+    ScrollTrigger.create({trigger:el,start:'top 85%',onEnter:function(){
+      el.classList.add('vis');
+      Array.from(el.children).forEach(function(c,i){c.style.transitionDelay=(i*.08)+'s'});
+    },once:true});
+  } else {
     el.classList.add('vis');
     Array.from(el.children).forEach(function(c,i){c.style.transitionDelay=(i*.08)+'s'});
-  },once:true});
+  }
 });
 
 /* HORIZONTAL TIMELINE SLIDER */
 !function(){
-  var currentIdx = 7; // AXIOMORT // THE FILM
+  var currentIdx = 7; // Active index
   var eras = document.querySelectorAll('.era');
   var nodes = document.querySelectorAll('.tl-node');
   var track = document.getElementById('tl-track');
@@ -1559,7 +1605,7 @@ document.querySelectorAll('.rvs').forEach(function(el){
     if (idx < 0 || idx >= eras.length) return;
     currentIdx = idx;
 
-    // Toggle background video opacity based on index (Axiomort slide index is 7)
+    // Toggle background video visibility
     var nowBg = document.getElementById('now-bg');
     if (nowBg) {
       nowBg.style.opacity = (currentIdx === 7) ? '1' : '0';
@@ -1576,7 +1622,7 @@ document.querySelectorAll('.rvs').forEach(function(el){
 
     // Update progress line
     var percent = (currentIdx / (eras.length - 1)) * 100;
-    if (animate) {
+    if (animate && typeof gsap !== 'undefined') {
       gsap.to(fill, { width: percent + '%', duration: 0.5, ease: 'power2.out' });
       gsap.to(track, { xPercent: -currentIdx * 100, duration: 0.8, ease: 'power3.inOut' });
 
@@ -1596,7 +1642,11 @@ document.querySelectorAll('.rvs').forEach(function(el){
       });
     } else {
       fill.style.width = percent + '%';
-      gsap.set(track, { xPercent: -currentIdx * 100 });
+      if (typeof gsap !== 'undefined') {
+        gsap.set(track, { xPercent: -currentIdx * 100 });
+      } else {
+        track.style.transform = 'translateX(' + (-currentIdx * 100) + '%)';
+      }
       eras.forEach(function(era, eIdx) {
         era.classList.toggle('active', eIdx === currentIdx);
       });
@@ -1655,12 +1705,12 @@ document.querySelectorAll('.rvs').forEach(function(el){
     }
   }, { passive: true });
 
-  // Initialize at signal_404 without animation
+  // Initialize slider index
   goToEra(currentIdx, false);
 }();
 
-/* GALLERY — shuffled on every refresh */
-/* HERO GALLERY SLIDESHOW */
+/* Gallery initialization */
+/* Slideshow */
 !function(){
   var imgs=[
     'gallery/01.jpg','gallery/02.jpg','gallery/03.jpg','gallery/04.jpg','gallery/05.png','gallery/06.png','gallery/07.jpg',
@@ -1738,7 +1788,7 @@ document.querySelectorAll('.rvs').forEach(function(el){
   }, { passive: true });
 }();
 
-/* FLOATING YOUTUBE RADIO PLAYER */
+/* Radio player */
 !function(){
   var playBtn = document.getElementById('audio-play-btn');
   var playIcon = document.getElementById('audio-play-icon');
@@ -1751,13 +1801,13 @@ document.querySelectorAll('.rvs').forEach(function(el){
 
   var firstPlay = true;
 
-  // 1. Inject YouTube Iframe API asynchronously
+  // Inject YouTube Iframe API
   var tag = document.createElement('script');
   tag.src = "https://www.youtube.com/iframe_api";
   var firstScriptTag = document.getElementsByTagName('script')[0];
   firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-  // 2. Define global callback
+  // Define global callback
   window.onYouTubeIframeAPIReady = function() {
     window.ytPlayer = new YT.Player('yt-audio-player', {
       height: '1',
@@ -1769,19 +1819,30 @@ document.querySelectorAll('.rvs').forEach(function(el){
       },
       events: {
         'onReady': onPlayerReady,
-        'onStateChange': onPlayerStateChange
+        'onStateChange': onPlayerStateChange,
+        'onError': onPlayerError
       }
     });
   };
+
+  function onPlayerError(event) {
+    console.error("YouTube Player error:", event.data);
+    titleEl.textContent = "Error playing track. Skipping...";
+    setTimeout(function() {
+      if (window.ytPlayer && typeof window.ytPlayer.nextVideo === 'function') {
+        window.ytPlayer.nextVideo();
+      }
+    }, 2000);
+  }
 
   function onPlayerReady(event) {
     playBtn.disabled = false;
     nextBtn.disabled = false;
     
-    // Set initial volume
+    // Set volume
     event.target.setVolume(volSlider.value);
     
-    // Try shuffling the playlist
+    // Shuffle playlist
     try {
       event.target.setShuffle(true);
     } catch(e) {}
@@ -1814,14 +1875,14 @@ document.querySelectorAll('.rvs').forEach(function(el){
     }
   }
 
-  // Poll for track changes in case YouTube playlist auto-advances
+  // Poll for track changes
   setInterval(function() {
     if (playerContainer.classList.contains('playing')) {
       updateTrackInfo();
     }
   }, 2000);
 
-  // 3. Attach actions
+  // Attach event handlers
   playBtn.addEventListener('click', function() {
     if (!window.ytPlayer) return;
     try {
@@ -1833,8 +1894,10 @@ document.querySelectorAll('.rvs').forEach(function(el){
           firstPlay = false;
           // Set shuffle
           window.ytPlayer.setShuffle(true);
-          // Play a random index (the playlist has 11 tracks)
-          var randIdx = Math.floor(Math.random() * 11);
+          // Play random index
+          var playlist = window.ytPlayer.getPlaylist();
+          var playlistSize = (playlist && playlist.length) ? playlist.length : 11;
+          var randIdx = Math.floor(Math.random() * playlistSize);
           window.ytPlayer.playVideoAt(randIdx);
         } else {
           window.ytPlayer.playVideo();
@@ -1858,17 +1921,30 @@ document.querySelectorAll('.rvs').forEach(function(el){
       window.ytPlayer.setVolume(volSlider.value);
     } catch(e) {}
   });
+
+  // Set player load timeout
+  setTimeout(function() {
+    if (firstPlay && titleEl.textContent === "Connecting...") {
+      titleEl.textContent = "Radio Offline (Blocked/Network)";
+      console.warn("YouTube Player API failed to initialize within timeout. Adblocker or offline?");
+    }
+  }, 8000);
 }();
 
 /* TOOLS GRID STAGGER */
 document.querySelectorAll('.tools-grid').forEach(function(grid){
-  ScrollTrigger.create({trigger:grid,start:'top 85%',onEnter:function(){
+  if (window.ScrollTrigger) {
+    ScrollTrigger.create({trigger:grid,start:'top 85%',onEnter:function(){
+      grid.classList.add('vis');
+      Array.from(grid.children).forEach(function(c,i){c.style.transitionDelay=(i*.06)+'s'});
+    },once:true});
+  } else {
     grid.classList.add('vis');
     Array.from(grid.children).forEach(function(c,i){c.style.transitionDelay=(i*.06)+'s'});
-  },once:true});
+  }
 });
 
-/* PLAYLIST THUMBNAILS (auto-updating via proxy to bypass CORS) */
+/* Playlist thumbnails */
 document.querySelectorAll('.era-thumb[data-pl], .radio-dial[data-pl]').forEach(function(thumb){
   var pl=thumb.getAttribute('data-pl');
   if (!pl || pl === 'none') return;
@@ -1881,7 +1957,8 @@ document.querySelectorAll('.era-thumb[data-pl], .radio-dial[data-pl]').forEach(f
       .then(function(r) { return r.json(); })
       .then(function(d) {
         if (d && d.thumbnail_url) {
-          thumb.style.backgroundImage = 'url("' + d.thumbnail_url + '")';
+          var safeUrl = sanitizeUrl(d.thumbnail_url);
+          if (safeUrl) thumb.style.backgroundImage = 'url("' + safeUrl + '")';
         }
       })
       .catch(function() {
@@ -1892,38 +1969,19 @@ document.querySelectorAll('.era-thumb[data-pl], .radio-dial[data-pl]').forEach(f
   }
 
   function fetchExternalThumbnail(playlistId) {
+    if (!/^[a-zA-Z0-9_-]+$/.test(playlistId)) return;
     var target = 'https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=' + playlistId + '&format=json';
     
-    var url1 = 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(target);
-    fetch(url1)
-      .then(function(r) {
-        if (!r.ok) throw new Error("Codetabs failed");
-        return r.text();
-      })
+    fetchProxied(target)
       .then(function(text) {
         var parsed = JSON.parse(text);
         if (parsed && parsed.thumbnail_url) {
-          thumb.style.backgroundImage = 'url("' + parsed.thumbnail_url + '")';
+          var safeUrl = sanitizeUrl(parsed.thumbnail_url);
+          if (safeUrl) thumb.style.backgroundImage = 'url("' + safeUrl + '")';
         }
       })
-      .catch(function() {
-        var url2 = 'https://api.allorigins.win/get?url=' + encodeURIComponent(target);
-        fetch(url2)
-          .then(function(r) {
-            if (!r.ok) throw new Error("AllOrigins failed");
-            return r.json();
-          })
-          .then(function(json) {
-            if (json && json.contents) {
-              var parsed = JSON.parse(json.contents);
-              if (parsed && parsed.thumbnail_url) {
-                thumb.style.backgroundImage = 'url("' + parsed.thumbnail_url + '")';
-              }
-            }
-          })
-          .catch(function(e) {
-            console.error("Failed to load thumbnail for playlist " + playlistId, e);
-          });
+      .catch(function(e) {
+        console.error("Failed to load thumbnail for playlist " + playlistId, e);
       });
   }
 });
@@ -1940,7 +1998,7 @@ document.querySelectorAll('.era-thumb[data-pl], .radio-dial[data-pl]').forEach(f
   });
 }();
 
-/* DEOBFUSCATED EMAIL CONTACT BUTTON */
+/* Email contact handler */
 !function(){
   var btn = document.getElementById('contact-btn');
   if (!btn) return;
