@@ -546,7 +546,7 @@ function Commission() {
         </div>
         <div className="media-row">
           {items
-            .filter((x) => x.kind === "video" && !x.partnerId)
+            .filter((x) => x.kind === "video" && !x.partnerId && x.id !== "project-the-rift-teaser")
             .slice(0, 4)
             .map((x) => (
               <MediaCard item={x} key={x.id} />
