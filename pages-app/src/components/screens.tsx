@@ -545,9 +545,13 @@ function Commission() {
           <h2>Some videos I’ve made.</h2>
         </div>
         <div className="media-row">
-          {items
-            .filter((x) => x.kind === "video" && !x.partnerId && x.id !== "project-the-rift-teaser")
-            .slice(0, 4)
+          {[
+            "orbital-frequency",
+            "sovereign-zero",
+            "breadflows-studio-signal-intro-53-sync-anomaly",
+            "video-chronodrift",
+          ]
+            .flatMap((id) => items.filter((x) => x.id === id))
             .map((x) => (
               <MediaCard item={x} key={x.id} />
             ))}
