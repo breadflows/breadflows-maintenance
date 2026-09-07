@@ -167,6 +167,11 @@ export function CollectionPage({ id }: { id: string }) {
                 : "Play video"}
           </PlaybackLink>
         )}
+        {id === "collaborations" && (
+          <Link className="button glass" href="/commission">
+            Let's collaborate <ArrowUpRight size={17} />
+          </Link>
+        )}
         {episodes.length > 0 && (
           <a className="button glass" href="#episodes">
             {id === "signal404" ? "Episodes" : "Videos"}

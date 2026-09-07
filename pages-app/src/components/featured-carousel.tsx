@@ -98,6 +98,11 @@ export function FeaturedCarousel() {
                 <Link className="button primary" href={collectionHref(c.id)}>
                   Explore {c.id === "axiomort" ? "AXIOMORT" : "the series"}
                 </Link>
+                {c.id === "collaborations" && (
+                  <Link className="button glass" href="/commission">
+                    Let's collaborate
+                  </Link>
+                )}
                 {c.trailerId && (
                   <PlaybackLink className="button glass" id={c.trailerId}>
                     <Play size={17} fill="currentColor" /> Play trailer
