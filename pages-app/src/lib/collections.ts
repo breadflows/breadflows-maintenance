@@ -5,6 +5,7 @@ export type Collection = {
   label: string;
   description: string;
   trailerId?: string;
+  previewId?: string;
   art: string;
   genres: string[];
   credit: string;
@@ -41,6 +42,7 @@ export const collections: Collection[] = [
     label: "A BREADFLOWS SERIES",
     description:
       "Music videos and stories made together. Featuring Hollow Idolz, Roy Thigpen and Monarch’s AI Illuminations.",
+    previewId: "sovereign-zero",
     art: "https://i.ytimg.com/vi/gOlBsgPE7s8/hqdefault.jpg",
     genres: ["Music videos", "Collaborations"],
     credit: "BreadFlows & collaborators",

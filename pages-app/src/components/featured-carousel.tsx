@@ -91,7 +91,7 @@ export function FeaturedCarousel() {
                 label={c.label}
                 description={c.description}
                 art={c.art}
-                trailer={items.find((x) => x.id === c.trailerId)}
+                trailer={items.find((x) => x.id === (c.previewId || c.trailerId))}
                 tags={c.genres}
                 credit={c.credit}
               >

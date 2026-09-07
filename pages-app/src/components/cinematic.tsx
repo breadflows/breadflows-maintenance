@@ -105,7 +105,7 @@ export function CinematicHero({
 export function CollectionCard({ collection, count }: { collection: Collection; count: number }) {
   const { items, playing, radio } = useBread();
   const intent = usePreviewIntent();
-  const trailer = items.find((x) => x.id === collection.trailerId);
+  const trailer = items.find((x) => x.id === (collection.previewId || collection.trailerId));
   return (
     <Link className="collection-card" href={collectionHref(collection.id)} {...intent.handlers}>
       <div className="collection-art">
@@ -125,7 +125,7 @@ export function CollectionCard({ collection, count }: { collection: Collection; 
       <h3>{collection.title}</h3>
       <p>
         {count
-          ? `${count} ${["signal404", "collaborations"].includes(collection.id) ? "episodes" : count === 1 ? "video" : "videos"}`
+          ? `${count} ${collection.id === "signal404" ? "episodes" : count === 1 ? "video" : "videos"}`
           : "Collection being curated"}
       </p>
     </Link>
@@ -143,7 +143,7 @@ export function CollectionPage({ id }: { id: string }) {
     );
   const episodes = collectionItems(c, items);
   const extras = collectionExtras(c, items);
-  const trailer = items.find((x) => x.id === c.trailerId);
+  const trailer = items.find((x) => x.id === (c.previewId || c.trailerId));
   const first = episodes[0];
   return (
     <main>
@@ -162,14 +162,14 @@ export function CollectionPage({ id }: { id: string }) {
             <Play size={18} fill="currentColor" />{" "}
             {id === "axiomort"
               ? "Play teaser"
-              : ["signal404", "collaborations"].includes(id)
+              : id === "signal404"
                 ? "Play episode 1"
-                : "Play"}
+                : "Play video"}
           </PlaybackLink>
         )}
         {episodes.length > 0 && (
           <a className="button glass" href="#episodes">
-            {["signal404", "collaborations"].includes(id) ? "Episodes" : "Videos"}
+            {id === "signal404" ? "Episodes" : "Videos"}
           </a>
         )}
         {!!extras.length && (
@@ -196,7 +196,7 @@ export function CollectionPage({ id }: { id: string }) {
       <section className="page episode-section" id="episodes">
         <div className="section-heading">
           <h2>
-            {["signal404", "collaborations"].includes(id)
+            {id === "signal404"
               ? "Episodes"
               : id === "axiomort"
                 ? "Trailers & films"
@@ -204,7 +204,7 @@ export function CollectionPage({ id }: { id: string }) {
           </h2>
           <span className="caption">
             {episodes.length}{" "}
-            {["signal404", "collaborations"].includes(id)
+            {id === "signal404"
               ? episodes.length === 1
                 ? "episode"
                 : "episodes"
@@ -281,8 +281,8 @@ function EpisodeCard({
         router.push(playbackHref(x.id));
       }}
     >
-      <span className="episode-number" aria-hidden={x.extraType ? true : undefined}>
-        {x.extraType ? <Play size={18} /> : String(x.episode || i + 1).padStart(2, "0")}
+      <span className="episode-number" aria-hidden={x.extraType || seriesId !== "signal404" ? true : undefined}>
+        {x.extraType || seriesId !== "signal404" ? <Play size={18} /> : String(x.episode || i + 1).padStart(2, "0")}
       </span>
       <div className="episode-art">
         <img src={x.art} alt="" loading="lazy" />
@@ -298,7 +298,7 @@ function EpisodeCard({
               ? "TEASER"
               : x.genres?.includes("Clip")
                 ? "CLIP"
-                : ["signal404", "collaborations"].includes(seriesId)
+                : seriesId === "signal404"
                   ? "EPISODE " + (x.episode || i + 1)
                   : "MUSIC VIDEO"}
         </span>
