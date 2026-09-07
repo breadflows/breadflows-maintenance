@@ -117,12 +117,21 @@ textarea:focus-visible {
   letter-spacing: -1.8px;
   white-space: nowrap;
 }
-.wordmark span {
-  color: var(--primary);
-  font-size: 14px;
-  vertical-align: super;
-  margin-left: 3px;
-  letter-spacing: 0;
+.wordmark-b {
+  position: relative;
+  display: inline-block;
+}
+.wordmark-b::before {
+  content: "b";
+  position: absolute;
+  inset: 0;
+  color: transparent;
+  pointer-events: none;
+  text-shadow:
+    -1px 0 0 rgb(116 245 234 / 75%),
+    -2.5px 0 3px rgb(116 245 234 / 45%),
+    -4px 0 7px rgb(211 124 234 / 35%);
+  clip-path: inset(-35% 55% -35% -65%);
 }
 .site-header nav {
   display: flex;

@@ -139,7 +139,10 @@ export function AppShell({ children }: { children: ReactNode }) {
       </a>
       <header className="site-header">
         <Link href="/" className="wordmark" aria-label="BreadFlows home">
-          breadflows
+          <span className="wordmark-b" aria-hidden="true">
+            b
+          </span>
+          readflows
         </Link>
         <nav aria-label="Main navigation">
           {[
@@ -201,8 +204,11 @@ export function AppShell({ children }: { children: ReactNode }) {
         )}
       </div>
       <footer>
-        <Link href="/" className="wordmark">
-          breadflows
+        <Link href="/" className="wordmark" aria-label="BreadFlows home">
+          <span className="wordmark-b" aria-hidden="true">
+            b
+          </span>
+          readflows
         </Link>
         <p>Music. Film. Other worlds.</p>
         <Link href="/commission">
