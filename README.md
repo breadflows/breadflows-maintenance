@@ -8,7 +8,7 @@ The public site for **https://breadflows.com**, published from this repository's
 - AXIOMORT leads the homepage carousel, followed by SIGNAL_404 and Collaborations.
 - Episode collections, delayed muted previews, preview-position handoff to full video, persistent music playback and Spotify links.
 - Official inline AIU.FM player, mobile touch controls and keyboard/TV navigation.
-- Music-video enquiries compose an email to **contact@breadflows.com**. The visitor must press Send in their own email app. No enquiry is submitted or stored by this site.
+- Commission and collaboration enquiries submit directly through FormSubmit to **contact@breadflows.com**, with all seven fields and the visitor’s reply email. Success requires an accepted provider response; errors preserve the draft. One-time inbox activation is required.
 - Merch and CDs/vinyl show upcoming states until real product information is supplied.
 
 This static edition has **no accounts, shared comments, uploads, creator studio, database or YouTube comment imports**. The separate full Sites version remains available privately with those backend capabilities. No server or API keys are needed for this edition.
@@ -42,8 +42,12 @@ The client router keeps music playing across navigation. Direct navigation to a 
 
 The catalogue is curated, with no automatic DistroKid or Spotify sync. When adding a release, verify its title, date, artwork, track list and streaming destination; add it to `catalog.json` and the release audit before building. Album tracks use `albumId` and `trackNumber`; they appear on the album page and in search, while main music shelves show one card per album or single. Never use a Spotify preview URL as a full audio file.
 
-Automated checks cover catalog/media completeness, all rendered internal links and assets, removal of backend-only controls, homepage series order, radio inclusion and safely encoded enquiry drafts. Physical TV hardware and delivery through a visitor's email app still depend on those devices/services.
+Automated checks cover catalog/media completeness, all rendered internal links and assets, removal of backend-only controls, homepage series order, radio inclusion and direct enquiry payloads and provider failure handling. Physical TV hardware and delivery through a visitor's email app still depend on those devices/services.
 
 The site before this release is commit `d776a34a76d6f98dff2ccb29d1bde08cac686e69`. Roll back using GitHub's revert operation on the hub deployment commit; the prior website and historical assets remain recoverable in Git. Preserve `CNAME` and existing DNS settings.
 
 AIU.FM adapts by viewport: compact (80px) through 650px, stacked standard (300px) through 1024px, and the original wide (300px) above that. Phones use device volume and omit the extra outbound control. A single iframe is retained during navigation; changing across a layout breakpoint reloads the provider player.
+
+## Contact delivery
+
+`pages-app/src/lib/contact.ts` sends only the allowed fields to the fixed FormSubmit AJAX endpoint. No SMTP credentials or API secrets are exposed. FormSubmit handles mail delivery and retains submissions for 30 days. The owner must activate contact@breadflows.com using the provider email. Test via the live commission page and confirm actual inbox receipt; an HTTP success confirms provider acceptance, not inbox delivery. The UI prevents duplicate in-flight submissions and does not retry automatically.

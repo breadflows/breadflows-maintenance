@@ -127,7 +127,7 @@ test("every rendered local navigation link and asset resolves on a plain static 
     if (info.isDirectory()) assert.ok((await stat(join(location, "index.html"))).isFile(), url);
   }
 });
-test("published pages have no backend forms, login prompts or fake shared comments", async () => {
+test("published pages have no removed account controls or fake shared comments", async () => {
   for (const file of htmlFiles) {
     const html = await readFile(file, "utf8");
     assert.doesNotMatch(
@@ -136,14 +136,14 @@ test("published pages have no backend forms, login prompts or fake shared commen
     );
   }
   const contact = await readFile(join(root, "commission/index.html"), "utf8");
-  assert.match(contact, /Open email draft/);
-  assert.match(contact, /Nothing is sent until you press/);
+  assert.match(contact, /Send enquiry/);
+  assert.doesNotMatch(contact, /Open email draft|Nothing is sent until you press/);
   const home = await readFile(join(root, "index.html"), "utf8");
   assert.match(home, /radio\.aiu\.fm\/zen/);
   assert.ok(home.indexOf("<h1>AXIOMORT</h1>") < home.indexOf("<h1>SIGNAL_404</h1>"));
   assert.equal((await readFile(join(root, "CNAME"), "utf8")).trim(), "breadflows.com");
 });
-test("contact drafts preserve special characters without injecting email recipients", async () => {
+test("enquiries send all fields to a fixed destination and never accept failed delivery as success", async () => {
   const result = await build({
     entryPoints: ["pages-app/src/lib/contact.ts"],
     bundle: true,
@@ -151,19 +151,74 @@ test("contact drafts preserve special characters without injecting email recipie
     platform: "node",
     format: "esm",
   });
-  const { enquiryMailto } = await import(
+  const { enquiryPayload, sendEnquiry, enquiryEndpoint } = await import(
     "data:text/javascript;base64," + Buffer.from(result.outputFiles[0].text).toString("base64")
   );
-  const uri = new URL(
-    enquiryMailto({
-      name: "A & B",
-      email: "test@example.com",
-      brief: "A song?\n&bcc=bad@example.com # hello",
-    }),
+  const data = {
+    name: "A & B",
+    email: "visitor@example.com",
+    track: "https://example.com/track?a=1&b=2",
+    brief: "A song?\n&bcc=bad@example.com",
+    budget: "To discuss",
+    deadline: "October",
+    references: "https://example.com/reference",
+    _cc: "bad@example.com",
+    _subject: "override",
+  };
+  const payload = enquiryPayload(data);
+  assert.equal(enquiryEndpoint, "https://formsubmit.co/ajax/contact@breadflows.com");
+  assert.equal(payload.name, data.name);
+  assert.equal(payload.email, data.email);
+  assert.equal(payload["Track link"], data.track);
+  assert.equal(payload["What do you have in mind?"], data.brief);
+  assert.equal(payload.Budget, data.budget);
+  assert.equal(payload.Timeline, data.deadline);
+  assert.equal(payload.References, data.references);
+  assert.equal(payload._cc, undefined);
+  assert.notEqual(payload._subject, "override");
+  await sendEnquiry(data, async (url, options) => {
+    assert.equal(url, enquiryEndpoint);
+    assert.equal(options.method, "POST");
+    assert.deepEqual(JSON.parse(options.body), payload);
+    return new Response(
+      JSON.stringify({ success: "true", message: "The form was submitted successfully." }),
+      { status: 200 },
+    );
+  });
+  for (const [status, body, expected] of [
+    [
+      200,
+      { success: "false", message: "Please activate your email." },
+      /awaiting email activation/,
+    ],
+    [
+      200,
+      { success: "true", message: "Check your email for confirmation" },
+      /awaiting email activation/,
+    ],
+    [200, { success: "false" }, /could not be submitted/],
+    [500, { success: "true" }, /could not be submitted/],
+  ])
+    await assert.rejects(
+      () => sendEnquiry(data, async () => new Response(JSON.stringify(body), { status })),
+      expected,
+    );
+  await assert.rejects(
+    () =>
+      sendEnquiry(data, async () => {
+        throw new TypeError("Network failure");
+      }),
+    /couldn't confirm/,
   );
-  assert.equal(uri.pathname, "contact@breadflows.com");
-  assert.equal(uri.searchParams.get("bcc"), null);
-  assert.equal(uri.searchParams.get("subject"), "Music video enquiry");
-  assert.match(uri.searchParams.get("body"), /A & B/);
-  assert.match(uri.searchParams.get("body"), /&bcc=bad@example.com # hello/);
+  await assert.rejects(
+    () => sendEnquiry(data, async () => new Response("<html>Unavailable</html>")),
+    /couldn't confirm/,
+  );
+  await assert.rejects(
+    () =>
+      sendEnquiry({ ...data, website: "spam" }, async () => {
+        assert.fail("Honeypot must not be submitted");
+      }),
+    /fill in/,
+  );
 });

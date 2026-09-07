@@ -22,7 +22,7 @@ import { Field, Choice, Notice } from "./forms";
 import { CinematicHero, CollectionCard, CollectionPage } from "./cinematic";
 import { collections, collectionHref, collectionItems, releaseCollection } from "@/lib/collections";
 import productsData from "@/lib/products.json";
-import { enquiryMailto } from "@/lib/contact";
+import { sendEnquiry } from "@/lib/contact";
 import { isMusic, musicReleases, newestFirst, spotifyEmbedUrl, type Release } from "@/lib/catalog";
 export function Screens() {
   const path = usePathname().split("/").filter(Boolean);
@@ -495,13 +495,33 @@ function RadioPage() {
 function Commission() {
   const { items } = useBread();
   const [message, setMessage] = useState("");
-  function submit(e: React.SubmitEvent<HTMLFormElement>) {
+  const [sending, setSending] = useState(false);
+  const [failed, setFailed] = useState(false);
+  const inFlight = useRef(false);
+  async function submit(e: React.SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
-    const data = Object.fromEntries(new FormData(e.currentTarget));
-    window.location.href = enquiryMailto(data);
-    setMessage(
-      "Your email app should open with your draft. Press Send there to send it. If nothing opens, email contact@breadflows.com directly.",
-    );
+    if (inFlight.current) return;
+    const form = e.currentTarget;
+    const data = Object.fromEntries(new FormData(form));
+    inFlight.current = true;
+    setSending(true);
+    setMessage("");
+    setFailed(false);
+    try {
+      await sendEnquiry(data);
+      setMessage("Enquiry submitted. Thanks — I’ll get back to you at the email you provided.");
+      form.reset();
+    } catch (error) {
+      setFailed(true);
+      setMessage(
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please email contact@breadflows.com.",
+      );
+    } finally {
+      inFlight.current = false;
+      setSending(false);
+    }
   }
   return (
     <main className="page">
@@ -553,58 +573,69 @@ function Commission() {
             </li>
           </ol>
         </div>
-        <form className="form-card" onSubmit={submit}>
-          <div className="form-grid">
-            <Field label="Your name">
-              <input name="name" required maxLength={100} autoComplete="name" />
+        <form className="form-card" onSubmit={submit} aria-busy={sending}>
+          <fieldset disabled={sending} style={{ border: 0, padding: 0, margin: 0, minWidth: 0 }}>
+            <div className="form-grid">
+              <Field label="Your name">
+                <input name="name" required maxLength={100} autoComplete="name" />
+              </Field>
+              <Field label="Email">
+                <input name="email" type="email" required maxLength={254} autoComplete="email" />
+              </Field>
+            </div>
+            <Field
+              label="Your track link (optional)"
+              hint="A private or public HTTPS listening link is fine."
+            >
+              <input name="track" type="url" maxLength={2000} placeholder="https://" />
             </Field>
-            <Field label="Email">
-              <input name="email" type="email" required maxLength={254} autoComplete="email" />
+            <Field label="What do you have in mind?">
+              <textarea
+                name="brief"
+                required
+                maxLength={5000}
+                rows={5}
+                placeholder="Tell me about your track and any ideas you have."
+              />
             </Field>
-          </div>
-          <Field
-            label="Your track link (optional)"
-            hint="A private or public HTTPS listening link is fine."
-          >
-            <input name="track" type="url" maxLength={2000} placeholder="https://" />
-          </Field>
-          <Field label="What do you have in mind?">
-            <textarea
-              name="brief"
-              required
-              maxLength={5000}
-              rows={5}
-              placeholder="Tell me about your track and any ideas you have."
-            />
-          </Field>
-          <div className="form-grid">
-            <Field label="Budget (optional)">
-              <input name="budget" maxLength={100} placeholder="A range or ‘to discuss’" />
+            <div className="form-grid">
+              <Field label="Budget (optional)">
+                <input name="budget" maxLength={100} placeholder="A range or ‘to discuss’" />
+              </Field>
+              <Field label="Timeline (optional)">
+                <input name="deadline" maxLength={100} placeholder="A release date or ‘flexible’" />
+              </Field>
+            </div>
+            <Field label="References (optional)">
+              <textarea
+                name="references"
+                maxLength={2000}
+                rows={2}
+                placeholder="Videos, artists or visual references you love"
+              />
             </Field>
-            <Field label="Timeline (optional)">
-              <input name="deadline" maxLength={100} placeholder="A release date or ‘flexible’" />
-            </Field>
-          </div>
-          <Field label="References (optional)">
-            <textarea
-              name="references"
-              maxLength={2000}
-              rows={2}
-              placeholder="Videos, artists or visual references you love"
-            />
-          </Field>
-          <label className="honeypot" aria-hidden="true">
-            Website
-            <input name="website" tabIndex={-1} autoComplete="off" />
-          </label>
-          <p className="caption">
-            This opens a draft in your email app. Nothing is sent until you press Send there. You
-            can also email contact@breadflows.com directly.
-          </p>
-          <Notice text={message} />
-          <button className="button primary">
-            Open email draft <ArrowUpRight size={17} />
-          </button>
+            <label className="honeypot" aria-hidden="true">
+              Website
+              <input name="website" tabIndex={-1} autoComplete="off" />
+            </label>
+            <p className="caption">
+              Send your enquiry directly to contact@breadflows.com. FormSubmit handles delivery. You
+              can also <a href="mailto:contact@breadflows.com">email me directly</a>.
+            </p>
+            <button className="button primary" type="submit">
+              {sending ? "Sending…" : "Send enquiry"} <ArrowUpRight size={17} />
+            </button>
+          </fieldset>
+          {message && (
+            <p className="notice" role={failed ? "alert" : "status"}>
+              {message}
+            </p>
+          )}
+          <noscript>
+            <p>
+              Please enable JavaScript to use this form, or email contact@breadflows.com directly.
+            </p>
+          </noscript>
         </form>
       </div>
     </main>
@@ -811,8 +842,12 @@ function About() {
       </p>
       <h2>Contact & privacy requests</h2>
       <p>
-        The enquiry form opens your email app with a draft; it does not submit or store your details
-        on this website. Send enquiries or privacy requests to{" "}
+        The enquiry form sends the details you enter to FormSubmit for delivery to our inbox.
+        FormSubmit retains submissions for 30 days. See{" "}
+        <a href="https://formsubmit.co/privacy.pdf" target="_blank" rel="noopener noreferrer">
+          FormSubmit’s privacy policy
+        </a>
+        . Send enquiries or privacy requests to{" "}
         <a href="mailto:contact@breadflows.com">contact@breadflows.com</a>.
       </p>
       <p>
