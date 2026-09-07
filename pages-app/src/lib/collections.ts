@@ -52,7 +52,12 @@ export const collections: Collection[] = [
 export const collectionHref = (id: string) =>
   id === "axiomort" ? "/axiomort" : "/collection/" + id;
 export function collectionItems(c: Collection, items: Release[]) {
-  return items.filter(c.match).sort((a, b) => (a.episode || 999) - (b.episode || 999));
+  return items
+    .filter((x) => c.match(x) && !x.extraType)
+    .sort((a, b) => (a.episode || 999) - (b.episode || 999));
+}
+export function collectionExtras(c: Collection, items: Release[]) {
+  return items.filter((x) => c.match(x) && !!x.extraType);
 }
 export function releaseCollection(item: Release) {
   return collections.find((c) => c.match(item));

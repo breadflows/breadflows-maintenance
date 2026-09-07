@@ -7,7 +7,13 @@ import { Play, Pause, ArrowUpRight } from "lucide-react";
 import { useBread } from "./app-shell";
 import type { Release } from "@/lib/catalog";
 import { PreviewMedia, usePreviewIntent, PlaybackLink } from "./video-preview";
-import { collections, collectionHref, collectionItems, type Collection } from "@/lib/collections";
+import {
+  collections,
+  collectionHref,
+  collectionItems,
+  collectionExtras,
+  type Collection,
+} from "@/lib/collections";
 
 export function CinematicHero({
   title,
@@ -136,6 +142,7 @@ export function CollectionPage({ id }: { id: string }) {
       </main>
     );
   const episodes = collectionItems(c, items);
+  const extras = collectionExtras(c, items);
   const trailer = items.find((x) => x.id === c.trailerId);
   const first = episodes[0];
   return (
@@ -165,6 +172,11 @@ export function CollectionPage({ id }: { id: string }) {
             {["signal404", "collaborations"].includes(id) ? "Episodes" : "Videos"}
           </a>
         )}
+        {!!extras.length && (
+          <a className="button glass" href="#extras">
+            Extras
+          </a>
+        )}
         {id === "axiomort" && (
           <Link className="button glass" href="/release/axiomort-soundtrack">
             Listen to the soundtrack
@@ -191,7 +203,14 @@ export function CollectionPage({ id }: { id: string }) {
                 : "Videos"}
           </h2>
           <span className="caption">
-            {episodes.length} {episodes.length === 1 ? "video" : "videos"}
+            {episodes.length}{" "}
+            {["signal404", "collaborations"].includes(id)
+              ? episodes.length === 1
+                ? "episode"
+                : "episodes"
+              : episodes.length === 1
+                ? "video"
+                : "videos"}
           </span>
         </div>
         {episodes.length ? (
@@ -213,6 +232,19 @@ export function CollectionPage({ id }: { id: string }) {
           </p>
         )}
       </section>
+      {!!extras.length && (
+        <section className="page episode-section" id="extras">
+          <div className="section-heading">
+            <h2>Extras</h2>
+            <span className="caption">Teaser & studio intro</span>
+          </div>
+          <div className="episode-list">
+            {extras.map((x, i) => (
+              <EpisodeCard key={x.id} item={x} index={i} seriesId={id} />
+            ))}
+          </div>
+        </section>
+      )}
     </main>
   );
 }
@@ -249,7 +281,9 @@ function EpisodeCard({
         router.push(playbackHref(x.id));
       }}
     >
-      <span className="episode-number">{String(i + 1).padStart(2, "0")}</span>
+      <span className="episode-number" aria-hidden={x.extraType ? true : undefined}>
+        {x.extraType ? <Play size={18} /> : String(x.episode || i + 1).padStart(2, "0")}
+      </span>
       <div className="episode-art">
         <img src={x.art} alt="" loading="lazy" />
         {intent.ready && !playing && !radio && <PreviewMedia item={x} className="card-preview" />}
@@ -257,13 +291,16 @@ function EpisodeCard({
       </div>
       <div>
         <span className="eyebrow">
-          {x.title.toLowerCase().includes("teaser") || x.subtitle?.toLowerCase().includes("teaser")
-            ? "TEASER"
-            : x.genres?.includes("Clip")
-              ? "CLIP"
-              : ["signal404", "collaborations"].includes(seriesId)
-                ? "EPISODE " + (i + 1)
-                : "MUSIC VIDEO"}
+          {x.extraType
+            ? x.extraType.toUpperCase()
+            : x.title.toLowerCase().includes("teaser") ||
+                x.subtitle?.toLowerCase().includes("teaser")
+              ? "TEASER"
+              : x.genres?.includes("Clip")
+                ? "CLIP"
+                : ["signal404", "collaborations"].includes(seriesId)
+                  ? "EPISODE " + (x.episode || i + 1)
+                  : "MUSIC VIDEO"}
         </span>
         <h3>
           {x.title}

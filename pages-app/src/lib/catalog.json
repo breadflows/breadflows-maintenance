@@ -675,7 +675,7 @@
     "youtubeId": "0Mk3vzzUmIE",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 1
+    "extraType": "Studio intro"
   },
   {
     "id": "project-the-rift-teaser",
@@ -687,7 +687,7 @@
     "youtubeId": "dU2hEtOd5bg",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 2
+    "extraType": "Teaser"
   },
   {
     "id": "ink-of-infinity-zavion-sylvara-s-celestial-verse",
@@ -699,7 +699,7 @@
     "youtubeId": "9B2-dywcJ_E",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "ink-of-infinity",
-    "episode": 3
+    "episode": 1
   },
   {
     "id": "m-v-rift-s-bounty-malik-creed",
@@ -711,7 +711,7 @@
     "youtubeId": "mp_B1G6mqfc",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "rift-s-bounty",
-    "episode": 4
+    "episode": 2
   },
   {
     "id": "nexus-veil-echoes-nyther-solis-tribal-hallucination-odyssey-4k",
@@ -723,7 +723,7 @@
     "youtubeId": "FgJfZrImh1g",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 5,
+    "episode": 3,
     "spotifyUrl": "https://open.spotify.com/album/4nZozOFFl0CBUZEaoxJDLm"
   },
   {
@@ -736,7 +736,7 @@
     "youtubeId": "SnvruafYLtw",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "neon-hunters",
-    "episode": 6,
+    "episode": 4,
     "spotifyUrl": "https://open.spotify.com/album/0oNA6g1ndqcQvkqhufvQOV"
   },
   {
@@ -749,7 +749,7 @@
     "youtubeId": "as_KkIP0s6w",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "nobody",
-    "episode": 8,
+    "episode": 6,
     "director": "BreadFlows"
   },
   {
@@ -762,7 +762,7 @@
     "youtubeId": "iRWSemO-CpY",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 9
+    "episode": 7
   },
   {
     "id": "machina-corpus-m-v",
@@ -774,7 +774,7 @@
     "youtubeId": "h50MD9svoVg",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "machina-corpus",
-    "episode": 10
+    "episode": 8
   },
   {
     "id": "vps-event-horizon-lament",
@@ -786,7 +786,7 @@
     "youtubeId": "oyZRvLjMAug",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "event-horizon-lament",
-    "episode": 11
+    "episode": 9
   },
   {
     "id": "project-the-rift-ink-between-worlds",
@@ -798,7 +798,7 @@
     "youtubeId": "CtPA2t7vZDo",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 12
+    "episode": 10
   },
   {
     "id": "unknown-bc02-signal-404",
@@ -810,7 +810,7 @@
     "youtubeId": "bW8nE6nDjqE",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 13
+    "episode": 11
   },
   {
     "id": "pressure-seal-cycle-six-maintenance-log",
@@ -822,7 +822,7 @@
     "youtubeId": "bLUE7sG7KbU",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "pressure-seal",
-    "episode": 14
+    "episode": 12
   },
   {
     "id": "video-theta-glyph-eclipse-climax-divine",
@@ -834,7 +834,7 @@
     "youtubeId": "uSZg3YSKZYQ",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "theta-glyph-eclipse-climax-divine",
-    "episode": 15
+    "episode": 13
   },
   {
     "id": "video-chronodrift",
@@ -846,7 +846,7 @@
     "youtubeId": "7E4u3O3woZk",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "chronodrift",
-    "episode": 16
+    "episode": 14
   },
   {
     "id": "nexus-veil-orion-vale",
@@ -857,7 +857,7 @@
     "art": "https://i.ytimg.com/vi/ylSL2EhBg80/hqdefault.jpg",
     "youtubeId": "ylSL2EhBg80",
     "description": "Orion Vale escapes robot captivity and crosses neon cities and bioluminescent jungles in a sci-fi odyssey.",
-    "episode": 7,
+    "episode": 5,
     "trackId": "the-nexus-veil"
   },
   {

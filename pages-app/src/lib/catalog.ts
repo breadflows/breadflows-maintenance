@@ -22,6 +22,7 @@ export type Release = {
   director?: string;
   collaborators?: string[];
   episode?: number;
+  extraType?: "Teaser" | "Studio intro";
   releaseDate?: string;
   albumId?: string;
   trackNumber?: number;

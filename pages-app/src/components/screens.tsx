@@ -210,7 +210,8 @@ function ReleasePage({ id }: { id: string }) {
     );
   const group = releaseCollection(item);
   const siblings = group ? collectionItems(group, items) : [];
-  const next = siblings[siblings.findIndex((x) => x.id === id) + 1];
+  const episodeIndex = siblings.findIndex((x) => x.id === id);
+  const next = episodeIndex >= 0 ? siblings[episodeIndex + 1] : undefined;
   const related = (
     group
       ? siblings
@@ -227,7 +228,7 @@ function ReleasePage({ id }: { id: string }) {
       (items.find((x) => x.id === item.trackId)?.title || item.title) + " " + item.creator,
     );
   const tags =
-    item.genres ||
+    (item.extraType ? [item.extraType] : item.genres) ||
     (item.subtitle?.toLowerCase().includes("teaser") || item.title.toLowerCase().includes("teaser")
       ? ["Teaser", "Sci-fi"]
       : ["Music video", ...(item.collaborators?.length ? ["Collaboration"] : [])]);
