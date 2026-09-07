@@ -42,3 +42,5 @@ The client router keeps music playing across navigation. Direct navigation to a 
 Automated checks cover catalog/media completeness, all rendered internal links and assets, removal of backend-only controls, homepage series order, radio inclusion and safely encoded enquiry drafts. Physical TV hardware and delivery through a visitor's email app still depend on those devices/services.
 
 The site before this release is commit `d776a34a76d6f98dff2ccb29d1bde08cac686e69`. Roll back using GitHub's revert operation on the hub deployment commit; the prior website and historical assets remain recoverable in Git. Preserve `CNAME` and existing DNS settings.
+
+AIU.FM adapts by viewport: compact (80px) through 650px, stacked standard (300px) through 1024px, and the original wide (300px) above that. Phones use device volume and omit the extra outbound control. A single iframe is retained during navigation; changing across a layout breakpoint reloads the provider player.

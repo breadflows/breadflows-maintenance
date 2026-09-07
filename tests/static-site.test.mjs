@@ -17,6 +17,31 @@ async function walk(dir) {
 }
 const files = await walk(root);
 const htmlFiles = files.filter((f) => f.endsWith(".html"));
+test("radio selects compact, stacked and wide embeds at the device breakpoints", async () => {
+  const result = await build({
+    entryPoints: ["pages-app/src/lib/radio-embed.ts"],
+    bundle: true,
+    write: false,
+    platform: "node",
+    format: "esm",
+  });
+  const { radioVariant, radioEmbedUrl } = await import(
+    "data:text/javascript;base64," + Buffer.from(result.outputFiles[0].text).toString("base64")
+  );
+  for (const width of [320, 390, 650]) assert.equal(radioVariant(width), "compact");
+  for (const width of [651, 768, 1024]) assert.equal(radioVariant(width), "standard");
+  for (const width of [1025, 1440, 1920]) assert.equal(radioVariant(width), "wide");
+  const phone = new URL(radioEmbedUrl("compact"));
+  assert.equal(phone.searchParams.get("info"), "true");
+  assert.equal(phone.searchParams.get("vol"), "false");
+  assert.equal(
+    radioEmbedUrl("wide"),
+    "https://radio.aiu.fm/zen?v=wide&art=true&vol=true&info=true&disc=true",
+  );
+  const home = await readFile(join(root, "index.html"), "utf8");
+  assert.equal((home.match(/title="AIU.FM radio player"/g) || []).length, 1);
+  assert.match(home, /data-radio-variant="compact"/);
+});
 test("all catalog entries and referenced local media are included", async () => {
   assert.equal(catalog.length, 49);
   assert.equal(new Set(catalog.map((x) => x.id)).size, 49);

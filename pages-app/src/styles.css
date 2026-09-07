@@ -1510,6 +1510,26 @@ footer small {
   display: block;
   border: 0;
 }
+.radio-inline[data-radio-variant="compact"] iframe,
+.radio-dock[data-radio-variant="compact"] iframe {
+  height: 80px;
+}
+.radio-dock[data-radio-variant="compact"] .radio-embed-heading {
+  margin-bottom: 0;
+  padding: 10px 12px 0;
+}
+.radio-dock[data-radio-variant="compact"] .radio-embed-heading h2 {
+  font-size: 1rem;
+}
+.radio-dock[data-radio-variant="compact"] .radio-embed-heading .eyebrow {
+  display: none;
+}
+.radio-dock[data-radio-variant="compact"] .radio-embed-heading button {
+  display: grid;
+  place-items: center;
+  min-width: 44px;
+  min-height: 44px;
+}
 .album-detail {
   display: grid;
   grid-template-columns: minmax(200px, 360px) 1fr;

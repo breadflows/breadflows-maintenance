@@ -5,6 +5,7 @@ import { usePathname, useRouter } from "@/routing";
 import { PreviewMedia, usePreviewIntent } from "./video-preview";
 import { playbackHref, playbackPosition } from "@/lib/playback";
 import { DeviceNavigation } from "./device-navigation";
+import { radioVariant, radioEmbedUrl } from "@/lib/radio-embed";
 import {
   Play,
   Pause,
@@ -44,6 +45,21 @@ export function AppShell({ children }: { children: ReactNode }) {
   const [playing, setPlaying] = useState(false);
   const [radio, setRadioState] = useState(false);
   const [radioSession, setRadioSession] = useState(0);
+  const [radioLayout, setRadioLayout] = useState(() =>
+    radioVariant(typeof window === "undefined" ? 390 : window.innerWidth),
+  );
+  useEffect(() => {
+    const phone = window.matchMedia("(max-width: 650px)");
+    const tablet = window.matchMedia("(max-width: 1024px)");
+    const update = () => setRadioLayout(radioVariant(window.innerWidth));
+    update();
+    phone.addEventListener("change", update);
+    tablet.addEventListener("change", update);
+    return () => {
+      phone.removeEventListener("change", update);
+      tablet.removeEventListener("change", update);
+    };
+  }, []);
   const inlineRadio = pathname === "/" || pathname === "/radio";
   const radioFrame = useRef<HTMLIFrameElement>(null);
   const [elapsed, setElapsed] = useState(0);
@@ -159,6 +175,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           <section
             className={inlineRadio ? "radio-inline" : "radio-dock"}
             aria-label="AIU.FM live radio"
+            data-radio-variant={radioLayout}
             id="aiu-radio"
           >
             <div className="radio-embed-heading">
@@ -177,7 +194,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               key={radioSession}
               ref={radioFrame}
               title="AIU.FM radio player"
-              src="https://radio.aiu.fm/zen?v=wide&art=true&vol=true&info=true&disc=true"
+              src={radioEmbedUrl(radioLayout)}
               allow="autoplay; encrypted-media"
             />
           </section>
