@@ -22,8 +22,31 @@ export type Release = {
   director?: string;
   collaborators?: string[];
   episode?: number;
+  releaseDate?: string;
+  albumId?: string;
+  trackNumber?: number;
+  durationMs?: number;
 };
 export const catalog = source as Release[];
+export const isMusic = (item: Release) => item.kind === "track" || item.kind === "album";
+export const musicReleases = (items: Release[]) =>
+  items.filter((item) => isMusic(item) && !item.albumId);
+export const newestFirst = (a: Release, b: Release) =>
+  (b.releaseDate || b.year || "").localeCompare(a.releaseDate || a.year || "");
+export function spotifyEmbedUrl(value?: string) {
+  if (!value) return null;
+  try {
+    const url = new URL(value);
+    if (
+      url.origin !== "https://open.spotify.com" ||
+      !/^\/(album|track)\/[A-Za-z0-9]{22}$/.test(url.pathname)
+    )
+      return null;
+    return "https://open.spotify.com/embed" + url.pathname + "?theme=0";
+  } catch {
+    return null;
+  }
+}
 export function safeExternal(value: string) {
   try {
     const u = new URL(value);

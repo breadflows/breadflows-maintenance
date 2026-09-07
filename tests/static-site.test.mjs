@@ -43,8 +43,7 @@ test("radio selects compact, stacked and wide embeds at the device breakpoints",
   assert.match(home, /data-radio-variant="compact"/);
 });
 test("all catalog entries and referenced local media are included", async () => {
-  assert.equal(catalog.length, 49);
-  assert.equal(new Set(catalog.map((x) => x.id)).size, 49);
+  assert.equal(new Set(catalog.map((x) => x.id)).size, catalog.length);
   assert.equal(catalog.filter((x) => x.audio).length, 26);
   for (const item of catalog) {
     const html = await readFile(join(root, "release", item.id, "index.html"), "utf8");
@@ -53,6 +52,39 @@ test("all catalog entries and referenced local media are included", async () => 
       if (item[key]?.startsWith("/"))
         assert.ok((await stat(join(root, item[key]))).size > 0, item[key]);
     }
+  }
+});
+test("verified releases appear in music and the soundtrack keeps its complete track list", async () => {
+  const audit = JSON.parse(await readFile("tests/release-audit.json", "utf8"));
+  const music = await readFile(join(root, "music/index.html"), "utf8");
+  const home = await readFile(join(root, "index.html"), "utf8");
+  const watch = await readFile(join(root, "watch/index.html"), "utf8");
+  for (const id of audit.releaseIds) {
+    assert.ok(
+      catalog.some((x) => x.id === id),
+      id,
+    );
+    assert.ok(music.includes('href="/release/' + id + '"'), id + " missing from Music");
+    assert.ok(
+      home.includes('href="/release/' + id + '"'),
+      id + " missing from homepage music shelf",
+    );
+    assert.ok(!watch.includes('href="/release/' + id + '"'), id + " incorrectly listed as a video");
+  }
+  const album = await readFile(join(root, "release/axiomort-soundtrack/index.html"), "utf8");
+  assert.match(album, /18 tracks/);
+  assert.deepEqual(
+    catalog.filter((x) => x.albumId === "axiomort-soundtrack").map((x) => x.id),
+    audit.albumTrackIds,
+  );
+  for (const id of audit.albumTrackIds) assert.ok(album.includes('href="/release/' + id + '"'), id);
+  for (const item of catalog.filter(
+    (x) => (x.kind === "album" || x.kind === "track") && !x.audio,
+  )) {
+    assert.match(item.spotifyUrl, /^https:\/\/open\.spotify\.com\/(album|track)\/[A-Za-z0-9]{22}$/);
+    const page = await readFile(join(root, "release", item.id, "index.html"), "utf8");
+    assert.match(page, /Open Spotify player/);
+    assert.doesNotMatch(page, />Play track</);
   }
 });
 test("every rendered local navigation link and asset resolves on a plain static host", async () => {

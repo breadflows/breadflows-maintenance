@@ -1,5 +1,327 @@
 [
   {
+    "id": "axiomort-soundtrack",
+    "title": "AXIOMORT (Original Motion Picture Soundtrack)",
+    "kind": "album",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "The original soundtrack to AXIOMORT. 18 tracks, from TECTONICS to LUCID.",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn",
+    "featured": true
+  },
+  {
+    "id": "axiomort-tectonics",
+    "title": "TECTONICS",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 1,
+    "durationMs": 171442,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 1 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/6no0M2O2af6FmbpqDrPX2q"
+  },
+  {
+    "id": "axiomort-paper-worlds",
+    "title": "PAPER WORLDS",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 2,
+    "durationMs": 297760,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 2 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/0VmMDSL79hJBS92kykd8Ab"
+  },
+  {
+    "id": "axiomort-infinitum",
+    "title": "INFINITUM",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 3,
+    "durationMs": 279639,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 3 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/6bytNOSMW62pb0ib5BW4E0"
+  },
+  {
+    "id": "axiomort-contraband",
+    "title": "CONTRABAND",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 4,
+    "durationMs": 295360,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 4 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/5bNSFY03svEdfaAnPV95I1"
+  },
+  {
+    "id": "axiomort-false-idols",
+    "title": "FALSE IDOLS",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 5,
+    "durationMs": 198665,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 5 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/6mhEj8DrizzlJSLtQW23VI"
+  },
+  {
+    "id": "axiomort-dead-frequency",
+    "title": "DEAD FREQUENCY",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 6,
+    "durationMs": 280564,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 6 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/4iHCCH5wgu5sixpEx3q3J8"
+  },
+  {
+    "id": "axiomort-sys-rebirth",
+    "title": "SYS_REBIRTH",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 7,
+    "durationMs": 247575,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 7 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/5rVSv6NDNlDYyL0hceDToO"
+  },
+  {
+    "id": "axiomort-severance",
+    "title": "SEVERANCE",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 8,
+    "durationMs": 183719,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 8 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/7sRh4eely308gBhGMEVYxT"
+  },
+  {
+    "id": "axiomort-the-veil",
+    "title": "THE VEIL",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 9,
+    "durationMs": 176080,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 9 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/2awgMYhp6njiblqFAcXrO8"
+  },
+  {
+    "id": "axiomort-wire-garden",
+    "title": "WIRE GARDEN",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 10,
+    "durationMs": 173338,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 10 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/2mqDZUPeh2p0Ga7C4ijocG"
+  },
+  {
+    "id": "axiomort-singularity",
+    "title": "SINGULARITY",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 11,
+    "durationMs": 213477,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 11 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/5cF6zbsuWiKl2wEcNJfbLG"
+  },
+  {
+    "id": "axiomort-redacted",
+    "title": "REDACTED",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 12,
+    "durationMs": 138946,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 12 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/3LD2eI7GFZNqnYVacTaYjH"
+  },
+  {
+    "id": "axiomort-decompression",
+    "title": "DECOMPRESSION",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 13,
+    "durationMs": 185732,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 13 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/5l0fkLrQ0ACF0Wl96U8LHc"
+  },
+  {
+    "id": "axiomort-time-slip",
+    "title": "TIME SLIP",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 14,
+    "durationMs": 251400,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 14 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/5CKGxTSH5dLr7rWjv60UyY"
+  },
+  {
+    "id": "axiomort-obscura",
+    "title": "OBSCURA",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 15,
+    "durationMs": 328915,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 15 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/3hJMNC676uSHHvrdPtQBJt"
+  },
+  {
+    "id": "axiomort-scripture",
+    "title": "SCRIPTURE",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 16,
+    "durationMs": 282800,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 16 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/007gahyc14xaCVNrvlnwbm"
+  },
+  {
+    "id": "axiomort-feral",
+    "title": "FERAL",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 17,
+    "durationMs": 236685,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 17 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/2jp8rjGR7QIImRZly2E9HG"
+  },
+  {
+    "id": "axiomort-lucid",
+    "title": "LUCID",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "AXIOMORT",
+    "albumId": "axiomort-soundtrack",
+    "trackNumber": 18,
+    "durationMs": 401530,
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273a26323212a327e3a4b9d8f58",
+    "description": "Track 18 from AXIOMORT (Original Motion Picture Soundtrack).",
+    "year": "2026",
+    "releaseDate": "2026-02-05",
+    "spotifyUrl": "https://open.spotify.com/track/0pcX7jps4hntp3Tt1YdCt5"
+  },
+  {
+    "id": "axiomotor",
+    "title": "AXIOMOTOR",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "Singles",
+    "art": "https://image-cdn-ak.spotifycdn.com/image/ab67616d0000b273529da234397949a13d1a6d46",
+    "description": "An original BreadFlows single.",
+    "year": "2026",
+    "releaseDate": "2026-07-22",
+    "spotifyUrl": "https://open.spotify.com/track/2QAMDQTpdwrktQLh46QFru",
+    "durationMs": 323076
+  },
+  {
+    "id": "qwerty-ape-shack",
+    "title": "QWERTY APE SHACK",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "Singles",
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b273c48aa969ff829a42fa97b77a",
+    "description": "An original BreadFlows single.",
+    "year": "2026",
+    "releaseDate": "2026-07-10",
+    "spotifyUrl": "https://open.spotify.com/track/2TfiPTKyUewN53IGrFusci",
+    "durationMs": 162160
+  },
+  {
+    "id": "sovereign-zero-single",
+    "title": "Sovereign Zero",
+    "kind": "track",
+    "creator": "BreadFlows",
+    "collection": "Singles",
+    "art": "https://image-cdn-fa.spotifycdn.com/image/ab67616d0000b2737ae6dcc73550fa64dcd16efc",
+    "description": "BreadFlows with Hollow Idolz.",
+    "year": "2025",
+    "releaseDate": "2025-11-22",
+    "spotifyUrl": "https://open.spotify.com/track/639SNbBvGmJydvFQ373XoS",
+    "durationMs": 227199
+  },
+  {
     "id": "axiomort-teaser-one",
     "title": "AXIOMORT",
     "subtitle": "Teaser One",
@@ -23,7 +345,10 @@
     "youtubeId": "gquEew9RZuc",
     "description": "A sound-sensitive apocalypse leads a survivor through a ruined city toward the signal from an abandoned satellite: the Phantom Glide.",
     "trackId": "phantom-glide",
-    "genres": ["Sci-fi", "Anime concept"]
+    "genres": [
+      "Sci-fi",
+      "Anime concept"
+    ]
   },
   {
     "id": "sovereign-zero",
@@ -36,8 +361,15 @@
     "description": "Ancient history collides with a corrupted simulation. Eutychis survives the eruption of Vesuvius by becoming something else. Music collaboration with Hollow Idolz: lyrics and audio remix.",
     "spotifyUrl": "https://open.spotify.com/album/1mSbADxllf6oph8lAeujNU",
     "director": "BreadFlows",
-    "collaborators": ["Hollow Idolz"],
-    "genres": ["Historical drama", "Cyberpunk", "Horror"]
+    "collaborators": [
+      "Hollow Idolz"
+    ],
+    "genres": [
+      "Historical drama",
+      "Cyberpunk",
+      "Horror"
+    ],
+    "trackId": "sovereign-zero-single"
   },
   {
     "id": "machina-corpus",
@@ -537,9 +869,14 @@
     "art": "https://i.ytimg.com/vi/19Ah9Omy4K0/hqdefault.jpg",
     "youtubeId": "19Ah9Omy4K0",
     "description": "The closing track from Monarch's AI Illuminations' debut album, Smoke and Silver. Music video by BreadFlows.",
-    "collaborators": ["Monarch's AI Illuminations"],
+    "collaborators": [
+      "Monarch's AI Illuminations"
+    ],
     "spotifyUrl": "https://open.spotify.com/album/6Y1feqDWC4l2doMVEgkUdS",
-    "genres": ["Music video", "Collaboration"]
+    "genres": [
+      "Music video",
+      "Collaboration"
+    ]
   },
   {
     "id": "always-a-bigger-fish",
@@ -550,7 +887,9 @@
     "art": "https://i.ytimg.com/vi/nl6pHlHoGHk/hqdefault.jpg",
     "youtubeId": "nl6pHlHoGHk",
     "description": "A camping-trip story about Brad's fishing adventure turns into a battle between legendary sea monsters.",
-    "collaborators": ["Roy Thigpen"]
+    "collaborators": [
+      "Roy Thigpen"
+    ]
   },
   {
     "id": "kraken-launched-into-space",
@@ -561,8 +900,14 @@
     "art": "https://i.ytimg.com/vi/V93vzUSnW-M/hqdefault.jpg",
     "youtubeId": "V93vzUSnW-M",
     "description": "A clash from Always A Bigger Fish: a prehistoric giant sends the Kraken into space.",
-    "collaborators": ["Roy Thigpen"],
-    "genres": ["Clip", "Fantasy", "Collaboration"]
+    "collaborators": [
+      "Roy Thigpen"
+    ],
+    "genres": [
+      "Clip",
+      "Fantasy",
+      "Collaboration"
+    ]
   },
   {
     "id": "kraken-go-weeeee",
@@ -573,7 +918,13 @@
     "art": "https://i.ytimg.com/vi/RrAq0S9Ojxs/hqdefault.jpg",
     "youtubeId": "RrAq0S9Ojxs",
     "description": "A short extract from the monster battles of Always A Bigger Fish.",
-    "collaborators": ["Roy Thigpen"],
-    "genres": ["Clip", "Fantasy", "Collaboration"]
+    "collaborators": [
+      "Roy Thigpen"
+    ],
+    "genres": [
+      "Clip",
+      "Fantasy",
+      "Collaboration"
+    ]
   }
 ]

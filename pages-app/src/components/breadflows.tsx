@@ -5,11 +5,12 @@ import { useBread, MediaCard } from "./app-shell";
 import { CollectionCard } from "./cinematic";
 import { FeaturedCarousel } from "./featured-carousel";
 import { collections, collectionItems } from "@/lib/collections";
+import { musicReleases, newestFirst } from "@/lib/catalog";
 export function BreadFlows() {
   const { items } = useBread();
-  const tracks = items
-    .filter((x) => x.kind === "track")
-    .sort((a, b) => Number(!!b.featured) - Number(!!a.featured));
+  const tracks = musicReleases(items).sort(
+    (a, b) => Number(!!b.featured) - Number(!!a.featured) || newestFirst(a, b),
+  );
   return (
     <main>
       <FeaturedCarousel />

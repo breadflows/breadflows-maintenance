@@ -33,7 +33,7 @@ export const collections: Collection[] = [
     art: "/media/art/axiomort-portal-rift.jpg",
     genres: ["Sci-fi", "Fantasy", "Teaser"],
     credit: "Created by BreadFlows",
-    match: (x) => x.collection === "AXIOMORT" && x.kind !== "track",
+    match: (x) => x.collection === "AXIOMORT" && (x.kind === "film" || x.kind === "video"),
   },
   {
     id: "collaborations",
@@ -45,7 +45,8 @@ export const collections: Collection[] = [
     genres: ["Music videos", "Collaborations"],
     credit: "BreadFlows & collaborators",
     match: (x) =>
-      x.kind !== "track" && (!!x.collaborators?.length || x.collection === "Collaborations"),
+      (x.kind === "film" || x.kind === "video") &&
+      (!!x.collaborators?.length || x.collection === "Collaborations"),
   },
 ];
 export const collectionHref = (id: string) =>

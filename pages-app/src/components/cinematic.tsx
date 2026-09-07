@@ -166,6 +166,11 @@ export function CollectionPage({ id }: { id: string }) {
           </a>
         )}
         {id === "axiomort" && (
+          <Link className="button glass" href="/release/axiomort-soundtrack">
+            Listen to the soundtrack
+          </Link>
+        )}
+        {id === "axiomort" && (
           <a
             className="text-button"
             href="https://axiomort.com"

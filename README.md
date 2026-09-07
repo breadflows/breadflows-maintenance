@@ -4,7 +4,7 @@ The public site for **https://breadflows.com**, published from this repository's
 
 ## What works
 
-- 26 music tracks and 23 video, clip and teaser entries; search and filters.
+- 47 music tracks, the 18-track AXIOMORT album page, and 23 video, clip and teaser entries; search and filters. The 26 existing hosted audio tracks keep native playback; the soundtrack and three added singles use official Spotify players loaded on request.
 - AXIOMORT leads the homepage carousel, followed by SIGNAL_404 and Collaborations.
 - Episode collections, delayed muted previews, preview-position handoff to full video, persistent music playback and Spotify links.
 - Official inline AIU.FM player, mobile touch controls and keyboard/TV navigation.
@@ -29,6 +29,7 @@ Commit the source changes **and the generated root files**, then push `main`. Gi
 
 - `pages-app/src/`: React source and copied design components.
 - `pages-app/src/lib/catalog.json`: curated music/video metadata.
+- `tests/release-audit.json`: releases verified against the public Spotify artist page on 2026-09-07. AXIOMORT uses the current 18-track Original Motion Picture Soundtrack edition; newer singles are AXIOMOTOR and QWERTY APE SHACK, plus the previously missing Sovereign Zero audio release. Tests check their music shelf visibility and the complete album track list.
 - `pages-app/src/lib/collections.ts`: series descriptions and episode grouping.
 - `pages-app/src/lib/products.json`: currently empty; add only real products with HTTPS hosted-checkout links.
 - `media/`: artwork and MP3 listening copies, kept at stable public URLs.
@@ -38,6 +39,8 @@ Commit the source changes **and the generated root files**, then push `main`. Gi
 The client router keeps music playing across navigation. Direct navigation to a release or collection uses its own `index.html`, so GitHub Pages needs no catch-all rewrite or hash routing. Product routes must also be included in the page list before publishing products.
 
 ## Validation and rollback
+
+The catalogue is curated, with no automatic DistroKid or Spotify sync. When adding a release, verify its title, date, artwork, track list and streaming destination; add it to `catalog.json` and the release audit before building. Album tracks use `albumId` and `trackNumber`; they appear on the album page and in search, while main music shelves show one card per album or single. Never use a Spotify preview URL as a full audio file.
 
 Automated checks cover catalog/media completeness, all rendered internal links and assets, removal of backend-only controls, homepage series order, radio inclusion and safely encoded enquiry drafts. Physical TV hardware and delivery through a visitor's email app still depend on those devices/services.
 

@@ -18,7 +18,7 @@ import {
   Volume2,
 } from "lucide-react";
 import { Slider } from "@/components/ui/slider";
-import { catalog, type Release } from "@/lib/catalog";
+import { catalog, isMusic, type Release } from "@/lib/catalog";
 
 type Member = { id: string; name: string; role: string; active: number };
 type State = {
@@ -313,7 +313,7 @@ export function MediaCard({ item }: { item: Release }) {
   const router = useRouter();
   return (
     <Link
-      className={"media-card " + (item.kind === "track" ? "square" : "")}
+      className={"media-card " + (isMusic(item) ? "square" : "")}
       href={"/release/" + item.id}
       {...intent.handlers}
       onClick={(e) => {
@@ -341,15 +341,19 @@ export function MediaCard({ item }: { item: Release }) {
             e.currentTarget.src = "/media/art/axiomort-portal-rift.jpg";
           }}
         />
-        {intent.ready && !playing && !radio && item.kind !== "track" && (
+        {intent.ready && !playing && !radio && !isMusic(item) && (
           <PreviewMedia item={item} className="card-preview" />
         )}
         <span className="card-play">
           <Play size={20} fill="currentColor" />
         </span>
         <span className="card-tag">
-          {item.kind === "track"
-            ? "SINGLE"
+          {isMusic(item)
+            ? item.kind === "album"
+              ? "ALBUM"
+              : item.albumId
+                ? "ALBUM TRACK"
+                : "SINGLE"
             : item.subtitle?.toLowerCase().includes("teaser") ||
                 item.title.toLowerCase().includes("teaser")
               ? "TEASER"

@@ -23,6 +23,7 @@ import { CinematicHero, CollectionCard, CollectionPage } from "./cinematic";
 import { collections, collectionHref, collectionItems, releaseCollection } from "@/lib/collections";
 import productsData from "@/lib/products.json";
 import { enquiryMailto } from "@/lib/contact";
+import { isMusic, musicReleases, newestFirst, spotifyEmbedUrl, type Release } from "@/lib/catalog";
 export function Screens() {
   const path = usePathname().split("/").filter(Boolean);
   switch (path[0]) {
@@ -75,25 +76,27 @@ export function Empty({ title, text }: { title: string; text?: string }) {
   );
 }
 function Library({ mode }: { mode: string }) {
-  const { items, play } = useBread();
+  const { items } = useBread();
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("all");
   const [collection, setCollection] = useState("all");
-  const [sort, setSort] = useState("curated");
+  const [sort, setSort] = useState(mode === "music" ? "newest" : "curated");
   const base =
     mode === "music"
-      ? items.filter((x) => x.kind === "track")
+      ? items.filter(isMusic)
       : mode === "watch"
-        ? items.filter((x) => x.kind !== "track")
+        ? items.filter((x) => !isMusic(x))
         : items;
   const collectionNames = [...new Set(base.map((x) => x.collection))];
   const found = base.filter(
     (x) =>
-      (kind === "all" || x.kind === kind) &&
+      (kind === "all" || (kind === "music" ? isMusic(x) : x.kind === kind)) &&
+      (mode !== "music" || !x.albumId || !!query.trim() || collection !== "all") &&
       (collection === "all" || x.collection === collection) &&
       [x.title, x.creator, x.collection].join(" ").toLowerCase().includes(query.toLowerCase()),
   );
   if (sort === "title") found.sort((a, b) => a.title.localeCompare(b.title));
+  if (sort === "newest") found.sort(newestFirst);
   return (
     <main className="page">
       <div className="page-intro">
@@ -112,11 +115,6 @@ function Library({ mode }: { mode: string }) {
               ? "Music videos, films and worlds worth getting lost in."
               : "Search music, films, collections and creative voices."}
         </p>
-        {mode === "music" && found[0] && (
-          <button className="button primary" onClick={() => play(found[0])}>
-            <Play size={17} fill="currentColor" /> Play collection
-          </button>
-        )}
       </div>
       {mode === "watch" && (
         <section className="shelf">
@@ -144,7 +142,9 @@ function Library({ mode }: { mode: string }) {
             onChange={setKind}
             options={[
               { value: "all", label: "All formats" },
-              { value: "track", label: "Music" },
+              { value: "music", label: "All music" },
+              { value: "album", label: "Albums" },
+              { value: "track", label: "Tracks" },
               { value: "video", label: "Music videos" },
               { value: "film", label: "Films" },
             ]}
@@ -165,6 +165,7 @@ function Library({ mode }: { mode: string }) {
           onChange={setSort}
           options={[
             { value: "curated", label: "Curated order" },
+            { value: "newest", label: "Newest first" },
             { value: "title", label: "Title: A to Z" },
           ]}
         />
@@ -210,7 +211,13 @@ function ReleasePage({ id }: { id: string }) {
   const group = releaseCollection(item);
   const siblings = group ? collectionItems(group, items) : [];
   const next = siblings[siblings.findIndex((x) => x.id === id) + 1];
-  const related = (group ? siblings : items.filter((x) => x.kind === item.kind))
+  const related = (
+    group
+      ? siblings
+      : isMusic(item)
+        ? musicReleases(items).sort(newestFirst)
+        : items.filter((x) => x.kind === item.kind)
+  )
     .filter((x) => x.id !== id)
     .slice(0, 6);
   const spotify = item.spotifyUrl || items.find((x) => x.id === item.trackId)?.spotifyUrl;
@@ -234,25 +241,46 @@ function ReleasePage({ id }: { id: string }) {
       <div className="release-breadcrumb">
         <Link
           className="text-button"
-          href={group ? collectionHref(group.id) : item.kind === "track" ? "/music" : "/watch"}
+          href={
+            item.albumId
+              ? "/release/" + item.albumId
+              : group
+                ? collectionHref(group.id)
+                : isMusic(item)
+                  ? "/music"
+                  : "/watch"
+          }
         >
           <ArrowLeft size={16} />
-          {group?.title || (item.kind === "track" ? "Music" : "Films & videos")}
+          {item.albumId
+            ? "AXIOMORT soundtrack"
+            : group?.title || (isMusic(item) ? "Music" : "Films & videos")}
         </Link>
         {item.episode && <span>Episode {item.episode}</span>}
       </div>
-      {item.kind === "track" ? (
+      {isMusic(item) ? (
         <section className="page album-detail">
           <img className="album-cover" src={item.art} alt={item.title + " cover"} />
           <div>
-            <span className="eyebrow">{item.collection}</span>
+            <span className="eyebrow">
+              {item.kind === "album"
+                ? "ALBUM"
+                : item.albumId
+                  ? "TRACK " + item.trackNumber
+                  : "SINGLE"}{" "}
+              · {item.year || item.collection}
+            </span>
             <h1>{item.title}</h1>
             <p className="release-by">{item.creator}</p>
             <p>{item.description}</p>
-            <button className="button primary" onClick={() => play(item)}>
-              {current?.id === id && playing ? <Pause size={18} /> : <Play size={18} />}{" "}
-              {current?.id === id && playing ? "Pause" : "Play track"}
-            </button>
+            {item.audio ? (
+              <button className="button primary" onClick={() => play(item)}>
+                {current?.id === id && playing ? <Pause size={18} /> : <Play size={18} />}{" "}
+                {current?.id === id && playing ? "Pause" : "Play track"}
+              </button>
+            ) : (
+              <SpotifyPlayer item={item} />
+            )}
           </div>
         </section>
       ) : watching ? (
@@ -319,6 +347,32 @@ function ReleasePage({ id }: { id: string }) {
         </CinematicHero>
       )}
       <div className="page release-below">
+        {item.kind === "album" && (
+          <section className="shelf" aria-label="Album tracks">
+            <div className="section-heading">
+              <h2>Track list</h2>
+              <span className="caption">{items.filter((x) => x.albumId === id).length} tracks</span>
+            </div>
+            <ol className="album-track-list">
+              {items
+                .filter((x) => x.albumId === id)
+                .sort((a, b) => (a.trackNumber || 0) - (b.trackNumber || 0))
+                .map((track) => (
+                  <li key={track.id}>
+                    <Link href={"/release/" + track.id}>
+                      <span className="track-number">{track.trackNumber}</span>
+                      <span>{track.title}</span>
+                      <span className="track-duration">
+                        {Math.floor((track.durationMs || 0) / 60000)}:
+                        {String(Math.floor((track.durationMs || 0) / 1000) % 60).padStart(2, "0")}
+                      </span>
+                      <Play size={16} aria-hidden="true" />
+                    </Link>
+                  </li>
+                ))}
+            </ol>
+          </section>
+        )}
         <div className="release-destinations">
           {(item.kind === "video" || spotify) && (
             <a
@@ -360,7 +414,7 @@ function ReleasePage({ id }: { id: string }) {
             More from this creator <ArrowUpRight size={16} />
           </Link>
         )}
-        {item.kind !== "track" && (
+        {!isMusic(item) && (
           <Link className="text-button commission-link" href="/commission">
             Commission your own music video <ArrowUpRight size={16} />
           </Link>
@@ -377,7 +431,7 @@ function ReleasePage({ id }: { id: string }) {
                     : "Keep listening"}
               </h2>
             </div>
-            <div className={"media-row " + (item.kind === "track" ? "albums" : "")}>
+            <div className={"media-row " + (isMusic(item) ? "albums" : "")}>
               {related.map((x) => (
                 <MediaCard key={x.id} item={x} />
               ))}
@@ -386,6 +440,46 @@ function ReleasePage({ id }: { id: string }) {
         )}
       </div>
     </main>
+  );
+}
+function SpotifyPlayer({ item }: { item: Release }) {
+  const { stop, playing, radio } = useBread();
+  const [opened, setOpened] = useState(false);
+  const src = spotifyEmbedUrl(item.spotifyUrl);
+  useEffect(() => {
+    if (playing || radio) setOpened(false);
+  }, [playing, radio]);
+  if (!src) return null;
+  return (
+    <div className="spotify-player">
+      {opened ? (
+        <>
+          <iframe
+            src={src}
+            title={item.title + " — Spotify player"}
+            height={item.kind === "album" ? 352 : 152}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+            allowFullScreen
+          />
+          <button className="text-button" onClick={() => setOpened(false)}>
+            Close player
+          </button>
+        </>
+      ) : (
+        <button
+          className="button primary"
+          onClick={() => {
+            stop();
+            setOpened(true);
+          }}
+        >
+          <Play size={18} /> Open Spotify player
+        </button>
+      )}
+      <p className="caption">
+        Listen with Spotify here. Full playback depends on your Spotify account and browser.
+      </p>
+    </div>
   );
 }
 function RadioPage() {
@@ -709,9 +803,10 @@ function About() {
       <p>
         Muted previews connect to YouTube on supported pointer devices or when you choose Preview.
         Automatic previews respect reduced-motion settings. Full videos connect when you play them.
-        The AIU.FM player connects automatically on Browse and the radio page. Those services may
-        process device or playback information under their own policies. Shop checkout links open
-        with the seller, who handles payment, shipping and returns.
+        The AIU.FM player connects automatically on Browse and the radio page. Spotify players
+        connect when you choose Open Spotify player. Those services may process device or playback
+        information under their own policies. Shop checkout links open with the seller, who handles
+        payment, shipping and returns.
       </p>
       <h2>Contact & privacy requests</h2>
       <p>
