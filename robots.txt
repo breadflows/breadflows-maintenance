@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /pages-app/
+Disallow: /scripts/
+Disallow: /tests/
+Disallow: /archive/
+Sitemap: https://breadflows.com/sitemap.xml
