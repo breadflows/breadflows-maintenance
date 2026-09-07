@@ -11,6 +11,10 @@ export function BreadFlows() {
   const tracks = musicReleases(items).sort(
     (a, b) => Number(!!b.featured) - Number(!!a.featured) || newestFirst(a, b),
   );
+  const latestVideos = items
+    .filter((item) => item.youtubeId && item.releaseDate)
+    .sort(newestFirst)
+    .slice(0, 7);
   return (
     <main>
       <FeaturedCarousel />
@@ -49,6 +53,21 @@ export function BreadFlows() {
             ))}
           </div>
         </section>
+        {!!latestVideos.length && (
+          <section className="shelf">
+            <div className="section-heading">
+              <h2>Latest videos</h2>
+              <Link href="/watch">
+                Watch all <ChevronRight size={18} />
+              </Link>
+            </div>
+            <div className="media-row">
+              {latestVideos.map((item) => (
+                <MediaCard key={item.id} item={item} />
+              ))}
+            </div>
+          </section>
+        )}
         {items.some((x) => x.partnerId) && (
           <section className="shelf">
             <div className="section-heading">

@@ -10,7 +10,8 @@
     "year": "2026",
     "releaseDate": "2026-02-05",
     "spotifyUrl": "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn",
-    "featured": true
+    "featured": true,
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-tectonics",
@@ -25,7 +26,8 @@
     "description": "Track 1 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/6no0M2O2af6FmbpqDrPX2q"
+    "spotifyUrl": "https://open.spotify.com/track/6no0M2O2af6FmbpqDrPX2q",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-paper-worlds",
@@ -40,7 +42,8 @@
     "description": "Track 2 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/0VmMDSL79hJBS92kykd8Ab"
+    "spotifyUrl": "https://open.spotify.com/track/0VmMDSL79hJBS92kykd8Ab",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-infinitum",
@@ -55,7 +58,8 @@
     "description": "Track 3 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/6bytNOSMW62pb0ib5BW4E0"
+    "spotifyUrl": "https://open.spotify.com/track/6bytNOSMW62pb0ib5BW4E0",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-contraband",
@@ -70,7 +74,8 @@
     "description": "Track 4 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/5bNSFY03svEdfaAnPV95I1"
+    "spotifyUrl": "https://open.spotify.com/track/5bNSFY03svEdfaAnPV95I1",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-false-idols",
@@ -85,7 +90,8 @@
     "description": "Track 5 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/6mhEj8DrizzlJSLtQW23VI"
+    "spotifyUrl": "https://open.spotify.com/track/6mhEj8DrizzlJSLtQW23VI",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-dead-frequency",
@@ -100,7 +106,8 @@
     "description": "Track 6 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/4iHCCH5wgu5sixpEx3q3J8"
+    "spotifyUrl": "https://open.spotify.com/track/4iHCCH5wgu5sixpEx3q3J8",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-sys-rebirth",
@@ -115,7 +122,8 @@
     "description": "Track 7 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/5rVSv6NDNlDYyL0hceDToO"
+    "spotifyUrl": "https://open.spotify.com/track/5rVSv6NDNlDYyL0hceDToO",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-severance",
@@ -130,7 +138,8 @@
     "description": "Track 8 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/7sRh4eely308gBhGMEVYxT"
+    "spotifyUrl": "https://open.spotify.com/track/7sRh4eely308gBhGMEVYxT",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-the-veil",
@@ -145,7 +154,8 @@
     "description": "Track 9 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/2awgMYhp6njiblqFAcXrO8"
+    "spotifyUrl": "https://open.spotify.com/track/2awgMYhp6njiblqFAcXrO8",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-wire-garden",
@@ -160,7 +170,8 @@
     "description": "Track 10 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/2mqDZUPeh2p0Ga7C4ijocG"
+    "spotifyUrl": "https://open.spotify.com/track/2mqDZUPeh2p0Ga7C4ijocG",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-singularity",
@@ -175,7 +186,8 @@
     "description": "Track 11 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/5cF6zbsuWiKl2wEcNJfbLG"
+    "spotifyUrl": "https://open.spotify.com/track/5cF6zbsuWiKl2wEcNJfbLG",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-redacted",
@@ -190,7 +202,8 @@
     "description": "Track 12 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/3LD2eI7GFZNqnYVacTaYjH"
+    "spotifyUrl": "https://open.spotify.com/track/3LD2eI7GFZNqnYVacTaYjH",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-decompression",
@@ -205,7 +218,8 @@
     "description": "Track 13 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/5l0fkLrQ0ACF0Wl96U8LHc"
+    "spotifyUrl": "https://open.spotify.com/track/5l0fkLrQ0ACF0Wl96U8LHc",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-time-slip",
@@ -220,7 +234,8 @@
     "description": "Track 14 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/5CKGxTSH5dLr7rWjv60UyY"
+    "spotifyUrl": "https://open.spotify.com/track/5CKGxTSH5dLr7rWjv60UyY",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-obscura",
@@ -235,7 +250,8 @@
     "description": "Track 15 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/3hJMNC676uSHHvrdPtQBJt"
+    "spotifyUrl": "https://open.spotify.com/track/3hJMNC676uSHHvrdPtQBJt",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-scripture",
@@ -250,7 +266,8 @@
     "description": "Track 16 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/007gahyc14xaCVNrvlnwbm"
+    "spotifyUrl": "https://open.spotify.com/track/007gahyc14xaCVNrvlnwbm",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-feral",
@@ -265,7 +282,8 @@
     "description": "Track 17 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/2jp8rjGR7QIImRZly2E9HG"
+    "spotifyUrl": "https://open.spotify.com/track/2jp8rjGR7QIImRZly2E9HG",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomort-lucid",
@@ -280,7 +298,8 @@
     "description": "Track 18 from AXIOMORT (Original Motion Picture Soundtrack).",
     "year": "2026",
     "releaseDate": "2026-02-05",
-    "spotifyUrl": "https://open.spotify.com/track/0pcX7jps4hntp3Tt1YdCt5"
+    "spotifyUrl": "https://open.spotify.com/track/0pcX7jps4hntp3Tt1YdCt5",
+    "spotifyAlbumId": "1g4SLK1XesNud64R5b8Zqn"
   },
   {
     "id": "axiomotor",
@@ -293,7 +312,8 @@
     "year": "2026",
     "releaseDate": "2026-07-22",
     "spotifyUrl": "https://open.spotify.com/track/2QAMDQTpdwrktQLh46QFru",
-    "durationMs": 323076
+    "durationMs": 323076,
+    "spotifyAlbumId": "472GUAehemWJJpjQkO65m8"
   },
   {
     "id": "qwerty-ape-shack",
@@ -306,7 +326,8 @@
     "year": "2026",
     "releaseDate": "2026-07-10",
     "spotifyUrl": "https://open.spotify.com/track/2TfiPTKyUewN53IGrFusci",
-    "durationMs": 162160
+    "durationMs": 162160,
+    "spotifyAlbumId": "3bPYBpyWAbqrdancMbu7O3"
   },
   {
     "id": "sovereign-zero-single",
@@ -319,7 +340,8 @@
     "year": "2025",
     "releaseDate": "2025-11-22",
     "spotifyUrl": "https://open.spotify.com/track/639SNbBvGmJydvFQ373XoS",
-    "durationMs": 227199
+    "durationMs": 227199,
+    "spotifyAlbumId": "1mSbADxllf6oph8lAeujNU"
   },
   {
     "id": "axiomort-teaser-one",
@@ -348,7 +370,9 @@
     "genres": [
       "Sci-fi",
       "Anime concept"
-    ]
+    ],
+    "releaseDate": "2026-02-07",
+    "year": "2026"
   },
   {
     "id": "sovereign-zero",
@@ -369,7 +393,9 @@
       "Cyberpunk",
       "Horror"
     ],
-    "trackId": "sovereign-zero-single"
+    "trackId": "sovereign-zero-single",
+    "releaseDate": "2026-01-07",
+    "year": "2026"
   },
   {
     "id": "machina-corpus",
@@ -514,7 +540,10 @@
     "audio": "/media/audio/neon-hunters.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/0oNA6g1ndqcQvkqhufvQOV"
+    "spotifyUrl": "https://open.spotify.com/album/0oNA6g1ndqcQvkqhufvQOV",
+    "releaseDate": "2025-07-10",
+    "durationMs": 148799,
+    "spotifyAlbumId": "0oNA6g1ndqcQvkqhufvQOV"
   },
   {
     "id": "event-horizon-lament",
@@ -615,7 +644,10 @@
     "audio": "/media/audio/chronodrift.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/26PVElrqqB61z0JCMEZwzH"
+    "spotifyUrl": "https://open.spotify.com/album/26PVElrqqB61z0JCMEZwzH",
+    "releaseDate": "2025-09-20",
+    "durationMs": 312879,
+    "spotifyAlbumId": "26PVElrqqB61z0JCMEZwzH"
   },
   {
     "id": "rift-s-bounty-creed-s-oath",
@@ -627,7 +659,10 @@
     "audio": "/media/audio/rift-s-bounty-creed-s-oath.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/1jFc6oU364nHERG4HySlbC"
+    "spotifyUrl": "https://open.spotify.com/album/1jFc6oU364nHERG4HySlbC",
+    "releaseDate": "2025-10-10",
+    "durationMs": 238519,
+    "spotifyAlbumId": "1jFc6oU364nHERG4HySlbC"
   },
   {
     "id": "when-the-grace-is-good",
@@ -639,7 +674,10 @@
     "audio": "/media/audio/when-the-grace-is-good.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/13XyTRNglITt8PvzYBgIoQ"
+    "spotifyUrl": "https://open.spotify.com/album/13XyTRNglITt8PvzYBgIoQ",
+    "releaseDate": "2025-10-20",
+    "durationMs": 182719,
+    "spotifyAlbumId": "13XyTRNglITt8PvzYBgIoQ"
   },
   {
     "id": "phantom-glide",
@@ -651,7 +689,10 @@
     "audio": "/media/audio/phantom-glide.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/5ngnuF8RBlO3Nt6NQDCsw8"
+    "spotifyUrl": "https://open.spotify.com/album/5ngnuF8RBlO3Nt6NQDCsw8",
+    "releaseDate": "2025-10-28",
+    "durationMs": 199799,
+    "spotifyAlbumId": "5ngnuF8RBlO3Nt6NQDCsw8"
   },
   {
     "id": "good-grace",
@@ -663,7 +704,10 @@
     "audio": "/media/audio/good-grace.mp3",
     "description": "An original BreadFlows release.",
     "year": "2025",
-    "spotifyUrl": "https://open.spotify.com/album/0ap4C6hdWBaK76ZW5Mzh8g"
+    "spotifyUrl": "https://open.spotify.com/album/0ap4C6hdWBaK76ZW5Mzh8g",
+    "releaseDate": "2025-11-06",
+    "durationMs": 151359,
+    "spotifyAlbumId": "0ap4C6hdWBaK76ZW5Mzh8g"
   },
   {
     "id": "breadflows-studio-signal-intro-53-sync-anomaly",
@@ -822,7 +866,9 @@
     "youtubeId": "bLUE7sG7KbU",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "pressure-seal",
-    "episode": 12
+    "episode": 12,
+    "releaseDate": "2025-09-24",
+    "year": "2025"
   },
   {
     "id": "video-theta-glyph-eclipse-climax-divine",
@@ -834,7 +880,9 @@
     "youtubeId": "uSZg3YSKZYQ",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "theta-glyph-eclipse-climax-divine",
-    "episode": 13
+    "episode": 13,
+    "releaseDate": "2025-10-18",
+    "year": "2025"
   },
   {
     "id": "video-chronodrift",
@@ -846,7 +894,9 @@
     "youtubeId": "7E4u3O3woZk",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "chronodrift",
-    "episode": 14
+    "episode": 14,
+    "releaseDate": "2025-11-21",
+    "year": "2025"
   },
   {
     "id": "nexus-veil-orion-vale",
@@ -925,6 +975,151 @@
       "Clip",
       "Fantasy",
       "Collaboration"
+    ]
+  },
+  {
+    "id": "youtube-gX3_VHeAm1s",
+    "title": "AXIOMORT ⋮ DECOMPRESSION // VISUALISER",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "gX3_VHeAm1s",
+    "art": "https://i.ytimg.com/vi/gX3_VHeAm1s/hqdefault.jpg",
+    "description": "AXIOMORT ⋮ DECOMPRESSION\n\nUnused soundtrack piece from AXIOMORT.\nMusic by BreadFlows.\n\n#AXIOMORT #BreadFlows\n\nVideo made in: https://vizzy.io\nProject by:\n- breadflows\n- New Sound Architect",
+    "releaseDate": "2026-09-06",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-lLmI1BTGXn4",
+    "title": "AXIOMORT ⋮ THE VEIL // VISUALISER",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "lLmI1BTGXn4",
+    "art": "https://i.ytimg.com/vi/lLmI1BTGXn4/hqdefault.jpg",
+    "description": "AXIOMORT ⋮ THE VEIL\n\nUnused soundtrack piece from AXIOMORT.\nBased on a true story.\nMusic by BreadFlows.\n\n#AXIOMORT #BreadFlows\n\nVideo made in: https://vizzy.io\nProject by:\n- Demonicat",
+    "releaseDate": "2026-09-02",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-pLFixz3nieA",
+    "title": "AXIOMORT ⋮ SYS_REBIRTH // VISUALISER",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "pLFixz3nieA",
+    "art": "https://i.ytimg.com/vi/pLFixz3nieA/hqdefault.jpg",
+    "description": "AXIOMORT ⋮ SYS_REBIRTH\n\nUnused soundtrack piece from AXIOMORT.\nMusic by BreadFlows.\n\n#AXIOMORT #BreadFlows\n\nVideo made in: https://vizzy.io\nProject by:\n- ThreeOak",
+    "releaseDate": "2026-08-30",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-gqk9UwQeH9c",
+    "title": "AXIOMORT™ | Concept Teaser",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "gqk9UwQeH9c",
+    "art": "https://i.ytimg.com/vi/gqk9UwQeH9c/hqdefault.jpg",
+    "description": "Visuals Subject to Change in Final Production\n\nThis is an early concept teaser for the feature-length sci-fi film AXIOMORT.",
+    "releaseDate": "2026-05-01",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ],
+    "extraType": "Teaser"
+  },
+  {
+    "id": "youtube-LTJMele5igo",
+    "title": "The World was Loud",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "LTJMele5igo",
+    "art": "https://i.ytimg.com/vi/LTJMele5igo/hqdefault.jpg",
+    "description": "A video from BreadFlows.",
+    "releaseDate": "2026-04-23",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-oVh55a0-vww",
+    "title": "Every Empire Ends in Me",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "oVh55a0-vww",
+    "art": "https://i.ytimg.com/vi/oVh55a0-vww/hqdefault.jpg",
+    "description": "A video from BreadFlows.",
+    "releaseDate": "2026-04-19",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-2B8_v10JsQA",
+    "title": "On a warm sunny day in Homerville...",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "2B8_v10JsQA",
+    "art": "https://i.ytimg.com/vi/2B8_v10JsQA/hqdefault.jpg",
+    "description": "A video from BreadFlows.",
+    "releaseDate": "2025-10-11",
+    "year": "2025",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-M-Teo7kGC2w",
+    "title": "Ｌᴏʀᴅᴇss ᴏғ ᴀᴄᴄᴏᴜɴᴛᴀʙɪʟɪᴛʏ",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "M-Teo7kGC2w",
+    "art": "https://i.ytimg.com/vi/M-Teo7kGC2w/hqdefault.jpg",
+    "description": "A video from BreadFlows.",
+    "releaseDate": "2025-10-05",
+    "year": "2025",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ]
+  },
+  {
+    "id": "youtube-Xav6Bw5BhvE",
+    "title": "Lichen & Rust: Observation Bay",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "Xav6Bw5BhvE",
+    "art": "https://i.ytimg.com/vi/Xav6Bw5BhvE/hqdefault.jpg",
+    "description": "➤ Archived visual signal from BreadFlows Studios.\n\nBroadcasts from fractured dimensions.\nGlitched transmissions. Recovered timelines.\n\nEach file is an unstable echo — a memory displaced by the Rift.\n\n[ FILE STATUS: UNSTABLE | SIGNAL_404 | AUDIO_LOGS ATTACHED ]\n\n▓▓ Visual Record Maintained by BreadFlows Studios ▓▓\n\n▶ Explore more: \nhttps://www.youtube.com/playlist?list=PLln60eLGTlYGmX5hnFW4AdtP9Zn22EmN1\n\n▬▬▬▬▬▬▬▬▬▬▬▬▬",
+    "releaseDate": "2025-09-29",
+    "year": "2025",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
     ]
   }
 ]

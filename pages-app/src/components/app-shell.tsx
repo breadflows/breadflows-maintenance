@@ -348,18 +348,22 @@ export function MediaCard({ item }: { item: Release }) {
           <Play size={20} fill="currentColor" />
         </span>
         <span className="card-tag">
-          {isMusic(item)
-            ? item.kind === "album"
-              ? "ALBUM"
-              : item.albumId
-                ? "ALBUM TRACK"
-                : "SINGLE"
-            : item.subtitle?.toLowerCase().includes("teaser") ||
-                item.title.toLowerCase().includes("teaser")
-              ? "TEASER"
-              : item.kind === "film"
-                ? "FILM"
-                : "MUSIC VIDEO"}
+          {item.extraType
+            ? item.extraType.toUpperCase()
+            : isMusic(item)
+              ? item.kind === "album"
+                ? "ALBUM"
+                : item.albumId
+                  ? "ALBUM TRACK"
+                  : "SINGLE"
+              : item.subtitle?.toLowerCase().includes("teaser") ||
+                  item.title.toLowerCase().includes("teaser")
+                ? "TEASER"
+                : item.kind === "film"
+                  ? "FILM"
+                  : item.importedFrom === "youtube"
+                    ? "VIDEO"
+                    : "MUSIC VIDEO"}
         </span>
       </div>
       <h3>{item.title}</h3>

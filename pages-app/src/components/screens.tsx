@@ -80,7 +80,7 @@ function Library({ mode }: { mode: string }) {
   const [query, setQuery] = useState("");
   const [kind, setKind] = useState("all");
   const [collection, setCollection] = useState("all");
-  const [sort, setSort] = useState(mode === "music" ? "newest" : "curated");
+  const [sort, setSort] = useState(mode === "search" ? "curated" : "newest");
   const base =
     mode === "music"
       ? items.filter(isMusic)

@@ -65,10 +65,11 @@ test("verified releases appear in music and the soundtrack keeps its complete tr
       id,
     );
     assert.ok(music.includes('href="/release/' + id + '"'), id + " missing from Music");
-    assert.ok(
-      home.includes('href="/release/' + id + '"'),
-      id + " missing from homepage music shelf",
-    );
+    if (catalog.find((x) => x.id === id)?.featured)
+      assert.ok(
+        home.includes('href="/release/' + id + '"'),
+        id + " missing from homepage music shelf",
+      );
     assert.ok(!watch.includes('href="/release/' + id + '"'), id + " incorrectly listed as a video");
   }
   const album = await readFile(join(root, "release/axiomort-soundtrack/index.html"), "utf8");

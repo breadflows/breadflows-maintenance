@@ -27,6 +27,8 @@ export type Release = {
   albumId?: string;
   trackNumber?: number;
   durationMs?: number;
+  importedFrom?: "youtube" | "spotify";
+  spotifyAlbumId?: string;
 };
 export const catalog = source as Release[];
 export const isMusic = (item: Release) => item.kind === "track" || item.kind === "album";
