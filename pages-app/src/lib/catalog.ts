@@ -11,6 +11,7 @@ export type Release = {
   audio?: string;
   video?: string;
   youtubeId?: string;
+  previewStart?: number;
   description: string;
   year?: string;
   status?: string;

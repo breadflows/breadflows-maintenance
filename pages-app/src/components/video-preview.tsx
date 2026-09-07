@@ -56,7 +56,9 @@ export function YouTubeVideo({
     let ended = false;
     let player: YouTubePlayer | undefined;
     let timer: ReturnType<typeof setInterval> | undefined;
-    const initial = preview ? playbackPosition(item.id) : safePlaybackTime(start);
+    const initial = preview
+      ? Math.max(playbackPosition(item.id), safePlaybackTime(item.previewStart || 0))
+      : safePlaybackTime(start);
     setReady(false);
     setFailed(false);
     void loadYouTube()
@@ -123,7 +125,7 @@ export function YouTubeVideo({
         }
       }
     };
-  }, [item.id, item.youtubeId, item.title, preview, start]);
+  }, [item.id, item.youtubeId, item.title, item.previewStart, preview, start]);
   return (
     <div className={"youtube-surface " + className + (ready ? " is-playing" : "")}>
       <div ref={host} className="youtube-mount" />
@@ -157,7 +159,10 @@ export function PreviewMedia({ item, className = "" }: { item: Release; classNam
       loop
       aria-hidden="true"
       onLoadedMetadata={(e) => {
-        e.currentTarget.currentTime = playbackPosition(item.id);
+        e.currentTarget.currentTime = Math.max(
+          playbackPosition(item.id),
+          safePlaybackTime(item.previewStart || 0),
+        );
       }}
       onPlaying={() => setReady(true)}
       onTimeUpdate={(e) => rememberPlayback(item.id, e.currentTarget.currentTime)}
