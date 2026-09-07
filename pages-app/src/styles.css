@@ -120,18 +120,32 @@ textarea:focus-visible {
 .wordmark-b {
   position: relative;
   display: inline-block;
+  isolation: isolate;
 }
 .wordmark-b::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -0.4em -0.12em -0.4em -1em;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse 0.25em 0.6em at 66% 48%, rgb(152 255 235 / 65%), rgb(73 220 233 / 28%) 40%, transparent 100%),
+    radial-gradient(ellipse 0.65em 0.4em at 43% 61%, rgb(125 148 255 / 32%), transparent 100%),
+    radial-gradient(ellipse 0.45em 0.35em at 31% 72%, rgb(211 143 235 / 20%), transparent 100%);
+  filter: blur(0.14em);
+  mask-image: linear-gradient(to right, transparent, #000 22%, #000 49%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 22%, #000 49%, transparent 85%);
+}
+.wordmark-b::after {
   content: "b";
   position: absolute;
   inset: 0;
   color: transparent;
   pointer-events: none;
-  text-shadow:
-    -1px 0 0 rgb(116 245 234 / 75%),
-    -2.5px 0 3px rgb(116 245 234 / 45%),
-    -4px 0 7px rgb(211 124 234 / 35%);
-  clip-path: inset(-35% 55% -35% -65%);
+  text-shadow: -0.045em 0 0.1em rgb(183 255 243 / 55%);
+  filter: blur(0.035em);
+  mask-image: linear-gradient(to right, #000, transparent 48%);
+  -webkit-mask-image: linear-gradient(to right, #000, transparent 48%);
 }
 .site-header nav {
   display: flex;
