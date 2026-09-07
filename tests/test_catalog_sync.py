@@ -55,6 +55,23 @@ class CatalogSyncTests(unittest.TestCase):
         self.assertTrue(all(x["albumId"] == "our-album" for x in merged[1:]))
         self.assertEqual(sync.merge([], incoming, [incoming[0]["spotifyUrl"]]), ([], []))
 
+    def test_video_album_links_apply_only_to_approved_titles_without_curated_links(self):
+        url = "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn"
+        rule = {"titlePrefix": "AXIOMORT", "spotifyUrl": url}
+        video = {"id": "new", "kind": "video", "creator": "BreadFlows", "title": "AXIOMORT \u22ee THE VEIL // VISUALISER"}
+        others = [
+            {**video, "title": "AXIOMORTAL"},
+            {**video, "title": "Every Empire Ends in Me"},
+            {**video, "creator": "Another artist"},
+            {**video, "spotifyUrl": "https://open.spotify.com/track/curated"},
+            {**video, "trackId": "curated-track"},
+        ]
+        linked = sync.link_video_music([video] + others, [rule])
+        self.assertEqual(linked[0]["spotifyUrl"], url)
+        self.assertEqual(linked[1:], others)
+        self.assertNotIn("spotifyUrl", video)
+        self.assertEqual(sync.link_video_music(linked, [rule]), linked)
+
     def test_outage_preserves_catalogue_and_other_provider_updates(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

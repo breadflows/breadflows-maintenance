@@ -180,6 +180,23 @@ def merge(existing, incoming, excluded=()):
     return result, added
 
 
+
+def link_video_music(catalog, rules):
+    # Explicit owner-approved title rules only; existing curated links take priority.
+    result = copy.deepcopy(catalog)
+    for rule in rules:
+        prefix, url = rule["titlePrefix"], rule["spotifyUrl"]
+        if not prefix or not re.fullmatch(r"https://open\.spotify\.com/album/[A-Za-z0-9]{22}", url):
+            raise ValueError("Invalid video album link rule")
+        for item in result:
+            if (item.get("kind") in ("video", "film")
+                    and item.get("creator") == "BreadFlows"
+                    and not item.get("spotifyUrl") and not item.get("trackId")
+                    and re.match(re.escape(prefix) + r"(?!\w)", item["title"], re.I)):
+                item["spotifyUrl"] = url
+    return result
+
+
 def save(path, data):
     encoded = json.dumps(data, ensure_ascii=False, indent=2) + "\n"
     if path.exists() and path.read_text(encoding="utf-8") == encoded:
@@ -219,6 +236,7 @@ def sync(root=ROOT):
         state["spotifyLastSuccess"] = today
     except Exception as error:
         errors.append("Spotify: " + str(error))
+    catalog = link_video_music(catalog, config.get("videoAlbumLinks", []))
     state["lastCheck"] = today
     state["errors"] = errors
     save(catalog_path, catalog)

@@ -1,3 +1,9 @@
 {
-  "excluded": []
+  "excluded": [],
+  "videoAlbumLinks": [
+    {
+      "titlePrefix": "AXIOMORT",
+      "spotifyUrl": "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn"
+    }
+  ]
 }
