@@ -1,6 +1,6 @@
 "use client";
 import Link from "@/link";
-import { ArrowUpRight, ChevronRight, ArrowRight } from "lucide-react";
+import { ArrowUpRight, ChevronRight } from "lucide-react";
 import { useBread, MediaCard } from "./app-shell";
 import { CollectionCard } from "./cinematic";
 import { FeaturedCarousel } from "./featured-carousel";
@@ -19,12 +19,6 @@ export function BreadFlows() {
     <main>
       <FeaturedCarousel />
       <div className="catalog-area">
-        <div className="browse-strip">
-          <span className="live-dot" /> INDEPENDENT VOICES. UNLIMITED WORLDS.
-          <Link href="/collection/collaborations">
-            Explore collaborations <ArrowRight size={16} />
-          </Link>
-        </div>
         <section className="shelf">
           <div className="section-heading">
             <h2>Series & worlds</h2>
