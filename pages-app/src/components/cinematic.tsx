@@ -241,7 +241,7 @@ export function CollectionPage({ id }: { id: string }) {
         <section className="page episode-section" id="extras">
           <div className="section-heading">
             <h2>Extras</h2>
-            <span className="caption">Teaser & studio intro</span>
+            <span className="caption">Teasers, studio intro, visualisers & recovered logs</span>
           </div>
           <div className="episode-list">
             {extras.map((x, i) => (

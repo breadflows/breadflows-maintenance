@@ -796,8 +796,8 @@
     "youtubeId": "as_KkIP0s6w",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "nobody",
-    "episode": 6,
-    "director": "BreadFlows"
+    "director": "BreadFlows",
+    "extraType": "Visualiser"
   },
   {
     "id": "glitch-reborn-ai-amv-fractal-ascendancy",
@@ -809,7 +809,7 @@
     "youtubeId": "iRWSemO-CpY",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 7
+    "episode": 6
   },
   {
     "id": "machina-corpus-m-v",
@@ -821,7 +821,7 @@
     "youtubeId": "h50MD9svoVg",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "machina-corpus",
-    "episode": 8
+    "episode": 7
   },
   {
     "id": "vps-event-horizon-lament",
@@ -833,7 +833,7 @@
     "youtubeId": "oyZRvLjMAug",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "event-horizon-lament",
-    "episode": 9
+    "episode": 8
   },
   {
     "id": "project-the-rift-ink-between-worlds",
@@ -845,7 +845,7 @@
     "youtubeId": "CtPA2t7vZDo",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 10
+    "episode": 9
   },
   {
     "id": "unknown-bc02-signal-404",
@@ -857,7 +857,7 @@
     "youtubeId": "bW8nE6nDjqE",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": null,
-    "episode": 11
+    "episode": 10
   },
   {
     "id": "pressure-seal-cycle-six-maintenance-log",
@@ -869,7 +869,7 @@
     "youtubeId": "bLUE7sG7KbU",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "pressure-seal",
-    "episode": 12,
+    "episode": 11,
     "releaseDate": "2025-09-24",
     "year": "2025"
   },
@@ -883,7 +883,7 @@
     "youtubeId": "uSZg3YSKZYQ",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "theta-glyph-eclipse-climax-divine",
-    "episode": 13,
+    "episode": 12,
     "releaseDate": "2025-10-18",
     "year": "2025"
   },
@@ -897,7 +897,7 @@
     "youtubeId": "7E4u3O3woZk",
     "description": "From SIGNAL_404 / Dimensional Extracts.",
     "trackId": "chronodrift",
-    "episode": 14,
+    "episode": 13,
     "releaseDate": "2025-11-21",
     "year": "2025"
   },
@@ -1127,6 +1127,48 @@
     "importedFrom": "youtube",
     "genres": [
       "Video"
+    ]
+  },
+  {
+    "id": "rose-petals-ressistance-neon-hunt-visualiser",
+    "title": "Rose Petals Ressistance: Neon Hunt Visualizer Video",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "SIGNAL_404",
+    "art": "https://i.ytimg.com/vi/bhQzV6GyQRs/hqdefault.jpg",
+    "youtubeId": "bhQzV6GyQRs",
+    "description": "A soundtrack visualiser from the SIGNAL_404 era.",
+    "extraType": "Visualiser",
+    "genres": [
+      "Visualiser"
+    ]
+  },
+  {
+    "id": "ink-between-worlds-soundtrack-visualiser",
+    "title": "Ink Between Worlds | From The Rift Soundtrack",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "SIGNAL_404",
+    "art": "https://i.ytimg.com/vi/DGlXjTk3IXI/hqdefault.jpg",
+    "youtubeId": "DGlXjTk3IXI",
+    "description": "A visualiser from The Rift soundtrack, collected in SIGNAL_404 Extras.",
+    "extraType": "Visualiser",
+    "genres": [
+      "Visualiser"
+    ]
+  },
+  {
+    "id": "xorvian-thal-unstable-transmission",
+    "title": "RECOVERED LOG: Xorvian Thal's Unstable Transmission [ETA_NULL]",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "SIGNAL_404",
+    "art": "https://i.ytimg.com/vi/k2Ifyxt41Sg/hqdefault.jpg",
+    "youtubeId": "k2Ifyxt41Sg",
+    "description": "A recovered transmission from the SIGNAL_404 era.",
+    "extraType": "Recovered log",
+    "genres": [
+      "Recovered log"
     ]
   }
 ]

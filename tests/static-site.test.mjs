@@ -88,20 +88,20 @@ test("verified releases appear in music and the soundtrack keeps its complete tr
     assert.doesNotMatch(page, />Play track</);
   }
 });
-test("SIGNAL_404 keeps teasers and intros outside its numbered episode sequence", async () => {
-  const extras = ["project-the-rift-teaser", "breadflows-studio-signal-intro-53-sync-anomaly"];
+test("SIGNAL_404 keeps all extras outside its numbered episode sequence", async () => {
+  const extras = ["project-the-rift-teaser", "breadflows-studio-signal-intro-53-sync-anomaly", "nobody-breadflows-official-music-video", "rose-petals-ressistance-neon-hunt-visualiser", "ink-between-worlds-soundtrack-visualiser", "xorvian-thal-unstable-transmission"];
   const episodes = catalog
     .filter((x) => x.collection === "SIGNAL_404" && x.episode)
     .sort((a, b) => a.episode - b.episode);
   assert.deepEqual(
     episodes.map((x) => x.episode),
-    Array.from({ length: 14 }, (_, i) => i + 1),
+    Array.from({ length: 13 }, (_, i) => i + 1),
   );
   assert.equal(episodes[0].id, "ink-of-infinity-zavion-sylvara-s-celestial-verse");
   const page = await readFile(join(root, "collection/signal404/index.html"), "utf8");
   const episodeSection = page.split('id="episodes"')[1].split("</section>")[0];
   const extraSection = page.split('id="extras"')[1].split("</section>")[0];
-  assert.match(page, /14<!-- --> <!-- -->episodes/);
+  assert.match(page, /13<!-- --> <!-- -->episodes/);
   assert.ok(page.includes('href="/release/' + episodes[0].id + '?play=1"'));
   for (const id of extras) {
     const item = catalog.find((x) => x.id === id);
