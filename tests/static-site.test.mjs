@@ -89,7 +89,7 @@ test("verified releases appear in music and the soundtrack keeps its complete tr
   }
 });
 test("SIGNAL_404 keeps all extras outside its numbered episode sequence", async () => {
-  const extras = ["project-the-rift-teaser", "breadflows-studio-signal-intro-53-sync-anomaly", "nobody-breadflows-official-music-video", "rose-petals-ressistance-neon-hunt-visualiser", "ink-between-worlds-soundtrack-visualiser", "xorvian-thal-unstable-transmission"];
+  const extras = ["project-the-rift-teaser", "breadflows-studio-signal-intro-53-sync-anomaly", "rose-petals-ressistance-neon-hunt-visualiser", "ink-between-worlds-soundtrack-visualiser", "xorvian-thal-unstable-transmission"];
   const episodes = catalog
     .filter((x) => x.collection === "SIGNAL_404" && x.episode)
     .sort((a, b) => a.episode - b.episode);
