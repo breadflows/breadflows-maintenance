@@ -1174,5 +1174,22 @@
       "Video"
     ],
     "spotifyUrl": "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn"
+  },
+  {
+    "id": "youtube-6wwUazOLADw",
+    "title": "AXIOMORT ⋮ OBSCURA // VISUALISER",
+    "kind": "video",
+    "creator": "BreadFlows",
+    "collection": "Latest videos",
+    "youtubeId": "6wwUazOLADw",
+    "art": "https://i.ytimg.com/vi/6wwUazOLADw/hqdefault.jpg",
+    "description": "AXIOMORT ⋮ OBSCURA\n\nUnused soundtrack piece from AXIOMORT.\nMusic by BreadFlows.\n\n#AXIOMORT #BreadFlows\n\nVideo made in: https://vizzy.io\nProject by:\n- Plantbomb",
+    "releaseDate": "2026-09-13",
+    "year": "2026",
+    "importedFrom": "youtube",
+    "genres": [
+      "Video"
+    ],
+    "spotifyUrl": "https://open.spotify.com/album/1g4SLK1XesNud64R5b8Zqn"
   }
 ]
